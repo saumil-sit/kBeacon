@@ -2,5 +2,5 @@
 # platform :ios, '9.0'
 
 target 'kBeacon' do
-
+  pod 'kbeaconlib2','1.2.1'
 end

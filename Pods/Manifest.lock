@@ -1,3 +1,16 @@
-PODFILE CHECKSUM: b272dd23e43fed2f752e157b3e96c62724dbfc67
+PODS:
+  - kbeaconlib2 (1.2.1)
+
+DEPENDENCIES:
+  - kbeaconlib2 (= 1.2.1)
+
+SPEC REPOS:
+  trunk:
+    - kbeaconlib2
+
+SPEC CHECKSUMS:
+  kbeaconlib2: 03146c34560f6737d6caa67d07d9d449cd0156f2
+
+PODFILE CHECKSUM: 74b8b388be3822c55431b23769ef3b639aecaa4c
 
 COCOAPODS: 1.16.2

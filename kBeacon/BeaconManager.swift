@@ -1,74 +1,66 @@
 import Foundation
 import SwiftUI
-import CoreBluetooth
 import Combine
-
-// Temporary model for UI.
-// Remove this struct if the real KBeacon SDK already provides a device model.
-struct BeaconDevice: Identifiable {
-    let id = UUID()
-    let name: String
-    let mac: String
-    let rssi: Int
-}
+import kbeaconlib2
 
 @MainActor
-final class BeaconManager: NSObject, ObservableObject, CBCentralManagerDelegate {
+final class BeaconManager: NSObject, ObservableObject {
 
-    @Published var bluetoothState: String = "Unknown"
     @Published var devices: [BeaconDevice] = []
-
-    private var centralManager: CBCentralManager!
+    @Published var bluetoothState: String = "Unknown"
 
     override init() {
         super.init()
-        centralManager = CBCentralManager(delegate: self, queue: .main)
+
+        KBeaconsMgr.sharedBeaconManager.delegate = self
     }
 
     func startScan() {
         devices.removeAll()
-        centralManager.scanForPeripherals(withServices: nil, options: nil)
+        _ = KBeaconsMgr.sharedBeaconManager.startScanning()
     }
 
     func stopScan() {
-        centralManager.stopScan()
+        KBeaconsMgr.sharedBeaconManager.stopScanning()
     }
+}
 
-    // MARK: - CBCentralManagerDelegate
+extension BeaconManager: KBeaconMgrDelegate {
 
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        switch central.state {
-        case .unknown:
-            bluetoothState = "Unknown"
-        case .resetting:
-            bluetoothState = "Resetting"
-        case .unsupported:
-            bluetoothState = "Unsupported"
-        case .unauthorized:
-            bluetoothState = "Unauthorized"
-        case .poweredOff:
-            bluetoothState = "Powered Off"
-        case .poweredOn:
-            bluetoothState = "Powered On"
-        @unknown default:
-            bluetoothState = "Unknown"
+    func onBeaconDiscovered(beacons: [KBeacon]) {
+
+        for beacon in beacons {
+
+            let device = BeaconDevice(
+                name: beacon.name ?? "Unknown",
+                mac: beacon.mac ?? "SIT",
+                uuid: beacon.uuidString ?? "123456",
+                rssi: Int(beacon.rssi)
+            )
+
+            if !devices.contains(where: { $0.mac == device.mac }) {
+                devices.append(device)
+            }
         }
     }
 
-    func centralManager(_ central: CBCentralManager,
-                        didDiscover peripheral: CBPeripheral,
-                        advertisementData: [String : Any],
-                        rssi RSSI: NSNumber) {
+    func onCentralBleStateChange(newState: BLECentralMgrState) {
 
-        let name = peripheral.name ?? "Unknown Device"
-        let mac = peripheral.identifier.uuidString
+        switch newState {
+        case .PowerOn:
+            bluetoothState = "Powered On"
 
-        devices.append(
-            BeaconDevice(
-                name: name,
-                mac: mac,
-                rssi: RSSI.intValue
-            )
-        )
+        case .PowerOff:
+            bluetoothState = "Powered Off"
+
+        case .Unauthorized:
+            bluetoothState = "Unauthorized"
+
+        case .Unknown:
+            bluetoothState = "Unknown"
+
+        @unknown default:
+            bluetoothState = "Unknown"
+        }
     }
 }

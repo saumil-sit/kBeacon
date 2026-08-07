@@ -7,21 +7,182 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BFA38C77DF3430F98C66C0E5FF521DFA /* Pods-kBeacon-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE741834C1F23C4939F71B2491F39F7 /* Pods-kBeacon-dummy.m */; };
+		01D44B50DD7270BE2742B571A5721D56 /* KBRecordCO2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF25BD00582EB08B5579E0E7A3C2CE68 /* KBRecordCO2.swift */; };
+		0774A4C33887DACCE35B6817E1204282 /* KBRecordHumidity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42737E805430D574EFDD641EF198CD89 /* KBRecordHumidity.swift */; };
+		1403B1ADD22D8E3CDC5C9BAF24021000 /* KBCfgSensorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B819C8D5B7919F218099CE3813275ADC /* KBCfgSensorBase.swift */; };
+		14BDEDE64F54671EDAE5B0B838F7D772 /* KBCfgSensorGEO.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5824A3DFD5EDEA08C913CB4E1CEB468 /* KBCfgSensorGEO.swift */; };
+		1682540C30D35F3C5382CDFAA4F067EC /* KBTriggerAdvChgMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B751FA351E7053D7BFEA2BEBEBDB8BF /* KBTriggerAdvChgMode.swift */; };
+		19B65059BA990E2A3A6C7673E6B84825 /* KBException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A88AE73B4DC8B98A7146A79FD9CD36 /* KBException.swift */; };
+		1B4352ABFCE0F44EA2CEDD6BFFC689DD /* KBRecordDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C11F6F517354A6466E9618DC81EA0 /* KBRecordDataHandler.swift */; };
+		1CA0341FD871BC71D31473FEAD1D5EEC /* KBCfgAdvEddyUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF49C3353791DFFCFFEEEA38A1EF59E /* KBCfgAdvEddyUID.swift */; };
+		1CEF2811E8C73561DD5444F003E7B524 /* KBAdvPacketEddyTLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207F5CE9FEEEE1756CDC1E083BF5C66 /* KBAdvPacketEddyTLM.swift */; };
+		243BD07E827881188FC48E76C5976207 /* KBTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A939C232D59FC92812262540FE2A52CC /* KBTimeRange.swift */; };
+		3291CF5E9EF0EE5EA1E0FB6D30E0C8E7 /* KBAuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF677301FDFEA74E93DAD02A8D853B2 /* KBAuthHandler.swift */; };
+		366257A50F2BC906011C47A994967F58 /* KBCfgSensorHT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DFFCB887EEE2BCF0B0D6AFC80AEA4B /* KBCfgSensorHT.swift */; };
+		3714B1D8A7E7C96E03E25F488EEA5B6B /* KBUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001645B6C3F070F9FE5BD0E2E563C50C /* KBUtility.swift */; };
+		37CFAF2271AB7EC0F11A503C0AA90C4D /* KBAdvTxPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62164DBA0D85DA43459F77365035FDB7 /* KBAdvTxPower.swift */; };
+		39102582DED8921FF03216DDE745439A /* KBAdvPacketHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF271377DD5BFA509AB7460552BBDA8 /* KBAdvPacketHandler.swift */; };
+		3CA2CE4FADA05F26B2BB66A2E229C902 /* KBAdvPacketIBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F234F1A2E9F67AEB923819449698C44 /* KBAdvPacketIBeacon.swift */; };
+		3E2489AFDF8DBB93A5752C743D004A2E /* KBCfgAdvNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48054CCF725FBC8380DAFCBC6D3F45F /* KBCfgAdvNull.swift */; };
+		4FF836048FA366ED46BF9FE56DD64C47 /* KBCfgAdvSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCDF6BF4DDC890DEFA2180D95D2FB91 /* KBCfgAdvSystem.swift */; };
+		54B3CF95D1744744763AB7FA06CDEBC3 /* KBCfgAdvKSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4326A5AD02ED943AA1390E658967C32 /* KBCfgAdvKSensor.swift */; };
+		5798B857DD5148469CB300662B8251FF /* KBCfgSensorCO2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6951E3AF296A9038D507136D0E9AB7A0 /* KBCfgSensorCO2.swift */; };
+		5E418C4514799CB728A096C5B2520D8E /* KBCfgSensorNFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992BFB45A4B802E0F37A29B37062862B /* KBCfgSensorNFC.swift */; };
+		5F680299F6EA57C563CCFCABC718C978 /* KBCfgType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44FF4008687DA2789B97A908F9E6FC6 /* KBCfgType.swift */; };
+		6077C01661E77E77306BA96A6ADE4C31 /* KBAdvPacketSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75B1C73874F6061A8FFB775412A71DC /* KBAdvPacketSystem.swift */; };
+		6B064C4FD7E8E2CD5883376D2727D793 /* KBRecordPIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1568A11A15584648E1B82036A23EE2B /* KBRecordPIR.swift */; };
+		6DDABD55AA8745345A90AAAA471287F1 /* KBeaconsMgr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B877CFBC7176A42D49629D7635A5B /* KBeaconsMgr.swift */; };
+		716E65B5F2321981365014398F40539F /* KBTLMElapseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D488B0805D09D2054628B0A7C6EBDAC /* KBTLMElapseTime.swift */; };
+		72F876A4BF79AB7D7E0589666706598D /* KBCfgBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF529F395E5D7A26BA79B08EB4D2B0CB /* KBCfgBase.swift */; };
+		7592BEB3AB55B3E2F16ED731C5E91C79 /* KBAdvPacketEBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEE97613D88FF301DC3913B62FE1DB6 /* KBAdvPacketEBeacon.swift */; };
+		75DD3E260A9E3001AB01FEC589FD7C0E /* KBAdvPacketEddyURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D85CEAD613C1C20F9F63B45B7C9BAAE /* KBAdvPacketEddyURL.swift */; };
+		85E61802B54C5B05ADF1AA7D25525C48 /* KBAdvPacketAOA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FD231B4D71041BB99647EF7F84BA73 /* KBAdvPacketAOA.swift */; };
+		88170D0652685BDB6EA8A66FA6715FF2 /* KBCfgTriggerMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A15A7D8E67FC5D62EB86A5BF0B974C /* KBCfgTriggerMotion.swift */; };
+		8864ABA0C8F33B5F4F8A6A49B286C9D0 /* KBRecordAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B7D4C2D5E5C3066DDB85E93612A35 /* KBRecordAlarm.swift */; };
+		8992CD808853383ADC9FC3B50883C065 /* KBCfgSensorScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCD3DBDC0DCE565F8537E60B403EA1 /* KBCfgSensorScan.swift */; };
+		8C433815F6C3E80C0338C328F5459EB1 /* KBAdvPacketBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3883ED711148538D7B60FFD61F847B2C /* KBAdvPacketBase.swift */; };
+		957C9CC56B4847ADDDDE9616350BE3FB /* kbeaconlib2-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 035E83367EFA890AABD0DF51628547AC /* kbeaconlib2-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		95991D66B8E85B6FA248606B8DC775C6 /* KBRecordLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4169B8C98408EF8CDAE772F815A71342 /* KBRecordLight.swift */; };
+		974CDD196C25DA2FBF2FBAA246371819 /* KBCfgSensorAcc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D12E8754889C427A6852F2E73DCE1 /* KBCfgSensorAcc.swift */; };
+		977F935813035414C22BC92AF383CA8C /* KBCfgAdvEBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C7A3D672F74C1971825D3ECC131B80 /* KBCfgAdvEBeacon.swift */; };
+		99349B5D96D0274615A579EB923E4764 /* KBRecordInfoRsp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D0D70F32FB18F92A4203DDE30DC0DB /* KBRecordInfoRsp.swift */; };
+		9B0EE4F582CB4EE00D273A1D21B69456 /* KBCfgAdvBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B944A84ADF0A3CA58695132F303B5E37 /* KBCfgAdvBase.swift */; };
+		9C46A55A711A97E719251950A4424CE2 /* KBTriggerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494E83BA054B3A3850932CECE3449CD0 /* KBTriggerType.swift */; };
+		9ED42FDBD3E1A0ED2DCE193E80C4FAEC /* KBPreferance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8418530A3AFF8272405F3C6E44D5A2C /* KBPreferance.swift */; };
+		A94A8F363E61FFAE0B77E5FFC878B87F /* KBCfgAdvIBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C35994E776482F383B9150C54DF40 /* KBCfgAdvIBeacon.swift */; };
+		AD71E69613ED5EF93E259B3596C667F1 /* KBRecordVOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EE852CA204461C70CC9CD6367A4A65 /* KBRecordVOC.swift */; };
+		ADFA5465824B825E2407D91F9CD68EFE /* KBRecordDataRsp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89559EF214605B5C494F583255F9EE3F /* KBRecordDataRsp.swift */; };
+		B20E59C6A0D9268490185817998959C2 /* KBRecordBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249CC7F8460A002FEB8A3981C84A031 /* KBRecordBase.swift */; };
+		BA07AC6AA3A36D2ED692A87027B690ED /* KBAdvPacketEddyUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBA54F3EF1848F9ED3BECD75DA5A163 /* KBAdvPacketEddyUID.swift */; };
+		BFE272DB60A1C1F8F7704A3EADA3E869 /* KBCfgSensorLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A6E3697194BD14CD0D88E7FCE98ABA /* KBCfgSensorLight.swift */; };
+		C43233E4231928DD60586A75842BBFA2 /* KBCfgHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CE2682A29B8D36648D266E7FB009D1 /* KBCfgHandler.swift */; };
+		C4E0190BF500EB35579ED73CA2151803 /* KBCfgTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C173F8A237AA173E62305AFCC52CCA0D /* KBCfgTrigger.swift */; };
+		CA7E589459842BEFF1A720D067B37AE9 /* KBAccSensorValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2D009CA8DC8CC662C5BE2DE736FD1 /* KBAccSensorValue.swift */; };
+		CAD34199F358CC7EB5B850B425EFEA87 /* KBCfgAdvEddyTLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDDD285AFE166C4FE95BC08165702E0 /* KBCfgAdvEddyTLM.swift */; };
+		CC17C694F05912102E996798276580E0 /* KBConnPara.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C21809445BF9849315E0602A9A43F1 /* KBConnPara.swift */; };
+		CE8734C926B878241C598DB01AE01082 /* Pods-kBeacon-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 770D1C9EC8D8C931DAA35869E3B27A9F /* Pods-kBeacon-dummy.m */; };
+		D477659BE6766E397F01354BAA83B80B /* KBTriggerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C28BED08159BA0712132CE7411419 /* KBTriggerAction.swift */; };
+		D86B80CC525D3F8078AFE8B0C8508DEC /* KBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2600F9E331A1E5819DF3AA282F76CDA /* KBeacon.swift */; };
+		D94BF31F2E2E34EFEB35DC77B7F117E0 /* KBCfgTriggerAngle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC506EACBA0140296637F832D2CC042 /* KBCfgTriggerAngle.swift */; };
+		DC711A9894D105DEEDFA8F08DB870557 /* kbeaconlib2-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B048417435A8E114FDDA8A0F95AB49DB /* kbeaconlib2-dummy.m */; };
+		DC9109ACEDD9BF6DEF1B8F5C00F476C3 /* KBCfgSensorVOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A3098FF2EBE39EC953223EC02C8758 /* KBCfgSensorVOC.swift */; };
+		E156C3E08C40ECC67872399C92876370 /* KBAdvMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CDE252ACA3DFE258E08AD633FC5753 /* KBAdvMode.swift */; };
+		E5F915AB77BCF5A931938507C7CB8466 /* KBCfgAdvAOA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAB5440DC3D3F1DBAE35236249A94DD /* KBCfgAdvAOA.swift */; };
+		E7832D92CBDC3468073842088983F11E /* ByteConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65192ED2C69D0724171E8644E1DE3C4 /* ByteConvert.swift */; };
+		EBFD50EF54C22DC14B7B14AB5917E165 /* KBSensorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBBD6E009921F85228A20EED2F8BD9E /* KBSensorType.swift */; };
+		ED4740DC27FC8148CEB960346EBFB1B6 /* Pods-kBeacon-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC816F6E107A043B00FD2B01CAA5129 /* Pods-kBeacon-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		EF1C2C56B84F28E7B7232F781F9BA75A /* KBAdvPacketSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72643B21E129E19D34642B6E73DEF716 /* KBAdvPacketSensor.swift */; };
+		F59583B65671E1FF498AF3B20E5F183C /* KBCfgSensorPIR.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8FA8E8E67A1747F7950EDFDA56305 /* KBCfgSensorPIR.swift */; };
+		F5A332BC068D83F077AA28D312160C6B /* KBCfgAdvEddyURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E517B377EAC8E5136D1B3FDDEB227 /* KBCfgAdvEddyURL.swift */; };
+		F88ECF122C57284BBB9CCC19F5B97AD4 /* UTCTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E55C8A855873D2D565FAEDBAAFB5D8 /* UTCTime.swift */; };
+		F934B579E74767BF46AC637338496C15 /* KBCfgCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A071DFBA47F5E4C57DE45A16E709EF6E /* KBCfgCommon.swift */; };
+		F9AD9E9A275F7A73A1BE65BE2F22FCB7 /* KBAdvType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E58437BF261C8B75873D039A37C1EB /* KBAdvType.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4EDE7D7B234CB3732841413EAEDAF853 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 989F78AFDFDA7F6A720659D6364CF384;
+			remoteInfo = kbeaconlib2;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		001645B6C3F070F9FE5BD0E2E563C50C /* KBUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBUtility.swift; path = kbeaconlib2/Classes/KBUtility.swift; sourceTree = "<group>"; };
+		02A6E3697194BD14CD0D88E7FCE98ABA /* KBCfgSensorLight.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorLight.swift; path = kbeaconlib2/Classes/KBCfgSensorLight.swift; sourceTree = "<group>"; };
+		035E83367EFA890AABD0DF51628547AC /* kbeaconlib2-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "kbeaconlib2-umbrella.h"; sourceTree = "<group>"; };
+		05E55C8A855873D2D565FAEDBAAFB5D8 /* UTCTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UTCTime.swift; path = kbeaconlib2/Classes/UTCTime.swift; sourceTree = "<group>"; };
+		08A88AE73B4DC8B98A7146A79FD9CD36 /* KBException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBException.swift; path = kbeaconlib2/Classes/KBException.swift; sourceTree = "<group>"; };
+		1207F5CE9FEEEE1756CDC1E083BF5C66 /* KBAdvPacketEddyTLM.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketEddyTLM.swift; path = kbeaconlib2/Classes/KBAdvPacketEddyTLM.swift; sourceTree = "<group>"; };
+		127732E36B89CAC707B3779DE6B19E02 /* kbeaconlib2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = kbeaconlib2.debug.xcconfig; sourceTree = "<group>"; };
+		13CE2682A29B8D36648D266E7FB009D1 /* KBCfgHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgHandler.swift; path = kbeaconlib2/Classes/KBCfgHandler.swift; sourceTree = "<group>"; };
+		2348E3CCBB2A5EE76CFC0E322C109A91 /* kbeaconlib2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = kbeaconlib2.release.xcconfig; sourceTree = "<group>"; };
+		24B2D009CA8DC8CC662C5BE2DE736FD1 /* KBAccSensorValue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAccSensorValue.swift; path = kbeaconlib2/Classes/KBAccSensorValue.swift; sourceTree = "<group>"; };
+		26EE852CA204461C70CC9CD6367A4A65 /* KBRecordVOC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordVOC.swift; path = kbeaconlib2/Classes/KBRecordVOC.swift; sourceTree = "<group>"; };
+		2AC816F6E107A043B00FD2B01CAA5129 /* Pods-kBeacon-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-kBeacon-umbrella.h"; sourceTree = "<group>"; };
+		2B751FA351E7053D7BFEA2BEBEBDB8BF /* KBTriggerAdvChgMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBTriggerAdvChgMode.swift; path = kbeaconlib2/Classes/KBTriggerAdvChgMode.swift; sourceTree = "<group>"; };
+		2DF49C3353791DFFCFFEEEA38A1EF59E /* KBCfgAdvEddyUID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvEddyUID.swift; path = kbeaconlib2/Classes/KBCfgAdvEddyUID.swift; sourceTree = "<group>"; };
+		3009BF23AAB58B572DCE54B985924130 /* Pods-kBeacon-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-kBeacon-acknowledgements.plist"; sourceTree = "<group>"; };
+		317B7D4C2D5E5C3066DDB85E93612A35 /* KBRecordAlarm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordAlarm.swift; path = kbeaconlib2/Classes/KBRecordAlarm.swift; sourceTree = "<group>"; };
+		31FB45C10B588B0F21EEF12CFA79DCCC /* kbeaconlib2.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = kbeaconlib2.modulemap; sourceTree = "<group>"; };
+		34A15A7D8E67FC5D62EB86A5BF0B974C /* KBCfgTriggerMotion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgTriggerMotion.swift; path = kbeaconlib2/Classes/KBCfgTriggerMotion.swift; sourceTree = "<group>"; };
+		36A3098FF2EBE39EC953223EC02C8758 /* KBCfgSensorVOC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorVOC.swift; path = kbeaconlib2/Classes/KBCfgSensorVOC.swift; sourceTree = "<group>"; };
+		3883ED711148538D7B60FFD61F847B2C /* KBAdvPacketBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketBase.swift; path = kbeaconlib2/Classes/KBAdvPacketBase.swift; sourceTree = "<group>"; };
+		38943F404177F4AFC34C5E770A683F30 /* Pods-kBeacon-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-kBeacon-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3CFCD3DBDC0DCE565F8537E60B403EA1 /* KBCfgSensorScan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorScan.swift; path = kbeaconlib2/Classes/KBCfgSensorScan.swift; sourceTree = "<group>"; };
+		3D488B0805D09D2054628B0A7C6EBDAC /* KBTLMElapseTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBTLMElapseTime.swift; path = kbeaconlib2/Classes/KBTLMElapseTime.swift; sourceTree = "<group>"; };
+		4169B8C98408EF8CDAE772F815A71342 /* KBRecordLight.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordLight.swift; path = kbeaconlib2/Classes/KBRecordLight.swift; sourceTree = "<group>"; };
+		42737E805430D574EFDD641EF198CD89 /* KBRecordHumidity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordHumidity.swift; path = kbeaconlib2/Classes/KBRecordHumidity.swift; sourceTree = "<group>"; };
+		494E83BA054B3A3850932CECE3449CD0 /* KBTriggerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBTriggerType.swift; path = kbeaconlib2/Classes/KBTriggerType.swift; sourceTree = "<group>"; };
+		4FF271377DD5BFA509AB7460552BBDA8 /* KBAdvPacketHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketHandler.swift; path = kbeaconlib2/Classes/KBAdvPacketHandler.swift; sourceTree = "<group>"; };
+		526B877CFBC7176A42D49629D7635A5B /* KBeaconsMgr.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBeaconsMgr.swift; path = kbeaconlib2/Classes/KBeaconsMgr.swift; sourceTree = "<group>"; };
 		5FA2861294799E4843D2D5BEA134F213 /* Pods-kBeacon */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-kBeacon"; path = "libPods-kBeacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		635DD1975A6450604C6C393BEA966C98 /* Pods-kBeacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-kBeacon.release.xcconfig"; sourceTree = "<group>"; };
-		9D4C7727D26405E98C88590FB90845F7 /* Pods-kBeacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-kBeacon.debug.xcconfig"; sourceTree = "<group>"; };
+		5FC506EACBA0140296637F832D2CC042 /* KBCfgTriggerAngle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgTriggerAngle.swift; path = kbeaconlib2/Classes/KBCfgTriggerAngle.swift; sourceTree = "<group>"; };
+		62164DBA0D85DA43459F77365035FDB7 /* KBAdvTxPower.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvTxPower.swift; path = kbeaconlib2/Classes/KBAdvTxPower.swift; sourceTree = "<group>"; };
+		68E58437BF261C8B75873D039A37C1EB /* KBAdvType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvType.swift; path = kbeaconlib2/Classes/KBAdvType.swift; sourceTree = "<group>"; };
+		6951E3AF296A9038D507136D0E9AB7A0 /* KBCfgSensorCO2.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorCO2.swift; path = kbeaconlib2/Classes/KBCfgSensorCO2.swift; sourceTree = "<group>"; };
+		6D85CEAD613C1C20F9F63B45B7C9BAAE /* KBAdvPacketEddyURL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketEddyURL.swift; path = kbeaconlib2/Classes/KBAdvPacketEddyURL.swift; sourceTree = "<group>"; };
+		6EDDD285AFE166C4FE95BC08165702E0 /* KBCfgAdvEddyTLM.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvEddyTLM.swift; path = kbeaconlib2/Classes/KBCfgAdvEddyTLM.swift; sourceTree = "<group>"; };
+		6F234F1A2E9F67AEB923819449698C44 /* KBAdvPacketIBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketIBeacon.swift; path = kbeaconlib2/Classes/KBAdvPacketIBeacon.swift; sourceTree = "<group>"; };
+		72643B21E129E19D34642B6E73DEF716 /* KBAdvPacketSensor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketSensor.swift; path = kbeaconlib2/Classes/KBAdvPacketSensor.swift; sourceTree = "<group>"; };
+		770D1C9EC8D8C931DAA35869E3B27A9F /* Pods-kBeacon-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-kBeacon-dummy.m"; sourceTree = "<group>"; };
+		786E517B377EAC8E5136D1B3FDDEB227 /* KBCfgAdvEddyURL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvEddyURL.swift; path = kbeaconlib2/Classes/KBCfgAdvEddyURL.swift; sourceTree = "<group>"; };
+		8390C8AA6B9392E775BBE39C5787610E /* Pods-kBeacon.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-kBeacon.modulemap"; sourceTree = "<group>"; };
+		89559EF214605B5C494F583255F9EE3F /* KBRecordDataRsp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordDataRsp.swift; path = kbeaconlib2/Classes/KBRecordDataRsp.swift; sourceTree = "<group>"; };
+		8EBA54F3EF1848F9ED3BECD75DA5A163 /* KBAdvPacketEddyUID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketEddyUID.swift; path = kbeaconlib2/Classes/KBAdvPacketEddyUID.swift; sourceTree = "<group>"; };
+		942B4679CED70A986569E0A312163AF7 /* kbeaconlib2-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "kbeaconlib2-prefix.pch"; sourceTree = "<group>"; };
+		94DFFCB887EEE2BCF0B0D6AFC80AEA4B /* KBCfgSensorHT.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorHT.swift; path = kbeaconlib2/Classes/KBCfgSensorHT.swift; sourceTree = "<group>"; };
+		992BFB45A4B802E0F37A29B37062862B /* KBCfgSensorNFC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorNFC.swift; path = kbeaconlib2/Classes/KBCfgSensorNFC.swift; sourceTree = "<group>"; };
+		9AF677301FDFEA74E93DAD02A8D853B2 /* KBAuthHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAuthHandler.swift; path = kbeaconlib2/Classes/KBAuthHandler.swift; sourceTree = "<group>"; };
+		9BAB5440DC3D3F1DBAE35236249A94DD /* KBCfgAdvAOA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvAOA.swift; path = kbeaconlib2/Classes/KBCfgAdvAOA.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		C2A79F18F4B27D3D3BB1024A728217B0 /* Pods-kBeacon-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-kBeacon-acknowledgements.plist"; sourceTree = "<group>"; };
-		DEE741834C1F23C4939F71B2491F39F7 /* Pods-kBeacon-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-kBeacon-dummy.m"; sourceTree = "<group>"; };
-		E3D64F2B7B3B794C0ECD8A104A96607C /* Pods-kBeacon-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-kBeacon-acknowledgements.markdown"; sourceTree = "<group>"; };
+		A071DFBA47F5E4C57DE45A16E709EF6E /* KBCfgCommon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgCommon.swift; path = kbeaconlib2/Classes/KBCfgCommon.swift; sourceTree = "<group>"; };
+		A249CC7F8460A002FEB8A3981C84A031 /* KBRecordBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordBase.swift; path = kbeaconlib2/Classes/KBRecordBase.swift; sourceTree = "<group>"; };
+		A8D0D70F32FB18F92A4203DDE30DC0DB /* KBRecordInfoRsp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordInfoRsp.swift; path = kbeaconlib2/Classes/KBRecordInfoRsp.swift; sourceTree = "<group>"; };
+		A939C232D59FC92812262540FE2A52CC /* KBTimeRange.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBTimeRange.swift; path = kbeaconlib2/Classes/KBTimeRange.swift; sourceTree = "<group>"; };
+		B048417435A8E114FDDA8A0F95AB49DB /* kbeaconlib2-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "kbeaconlib2-dummy.m"; sourceTree = "<group>"; };
+		B4C7A3D672F74C1971825D3ECC131B80 /* KBCfgAdvEBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvEBeacon.swift; path = kbeaconlib2/Classes/KBCfgAdvEBeacon.swift; sourceTree = "<group>"; };
+		B819C8D5B7919F218099CE3813275ADC /* KBCfgSensorBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorBase.swift; path = kbeaconlib2/Classes/KBCfgSensorBase.swift; sourceTree = "<group>"; };
+		B944A84ADF0A3CA58695132F303B5E37 /* KBCfgAdvBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvBase.swift; path = kbeaconlib2/Classes/KBCfgAdvBase.swift; sourceTree = "<group>"; };
+		BF25BD00582EB08B5579E0E7A3C2CE68 /* KBRecordCO2.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordCO2.swift; path = kbeaconlib2/Classes/KBRecordCO2.swift; sourceTree = "<group>"; };
+		C173F8A237AA173E62305AFCC52CCA0D /* KBCfgTrigger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgTrigger.swift; path = kbeaconlib2/Classes/KBCfgTrigger.swift; sourceTree = "<group>"; };
+		C2600F9E331A1E5819DF3AA282F76CDA /* KBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBeacon.swift; path = kbeaconlib2/Classes/KBeacon.swift; sourceTree = "<group>"; };
+		C4326A5AD02ED943AA1390E658967C32 /* KBCfgAdvKSensor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvKSensor.swift; path = kbeaconlib2/Classes/KBCfgAdvKSensor.swift; sourceTree = "<group>"; };
+		C8E8FA8E8E67A1747F7950EDFDA56305 /* KBCfgSensorPIR.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorPIR.swift; path = kbeaconlib2/Classes/KBCfgSensorPIR.swift; sourceTree = "<group>"; };
+		CBCDF6BF4DDC890DEFA2180D95D2FB91 /* KBCfgAdvSystem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvSystem.swift; path = kbeaconlib2/Classes/KBCfgAdvSystem.swift; sourceTree = "<group>"; };
+		D48054CCF725FBC8380DAFCBC6D3F45F /* KBCfgAdvNull.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvNull.swift; path = kbeaconlib2/Classes/KBCfgAdvNull.swift; sourceTree = "<group>"; };
+		D67D12E8754889C427A6852F2E73DCE1 /* KBCfgSensorAcc.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorAcc.swift; path = kbeaconlib2/Classes/KBCfgSensorAcc.swift; sourceTree = "<group>"; };
+		D75B1C73874F6061A8FFB775412A71DC /* KBAdvPacketSystem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketSystem.swift; path = kbeaconlib2/Classes/KBAdvPacketSystem.swift; sourceTree = "<group>"; };
+		D7FD231B4D71041BB99647EF7F84BA73 /* KBAdvPacketAOA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketAOA.swift; path = kbeaconlib2/Classes/KBAdvPacketAOA.swift; sourceTree = "<group>"; };
+		D8418530A3AFF8272405F3C6E44D5A2C /* KBPreferance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBPreferance.swift; path = kbeaconlib2/Classes/KBPreferance.swift; sourceTree = "<group>"; };
+		D99C28BED08159BA0712132CE7411419 /* KBTriggerAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBTriggerAction.swift; path = kbeaconlib2/Classes/KBTriggerAction.swift; sourceTree = "<group>"; };
+		DA2C35994E776482F383B9150C54DF40 /* KBCfgAdvIBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgAdvIBeacon.swift; path = kbeaconlib2/Classes/KBCfgAdvIBeacon.swift; sourceTree = "<group>"; };
+		DF529F395E5D7A26BA79B08EB4D2B0CB /* KBCfgBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgBase.swift; path = kbeaconlib2/Classes/KBCfgBase.swift; sourceTree = "<group>"; };
+		E5824A3DFD5EDEA08C913CB4E1CEB468 /* KBCfgSensorGEO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgSensorGEO.swift; path = kbeaconlib2/Classes/KBCfgSensorGEO.swift; sourceTree = "<group>"; };
+		E60E41F77095C42CAF095C14DBDF9354 /* Pods-kBeacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-kBeacon.debug.xcconfig"; sourceTree = "<group>"; };
+		E65192ED2C69D0724171E8644E1DE3C4 /* ByteConvert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ByteConvert.swift; path = kbeaconlib2/Classes/ByteConvert.swift; sourceTree = "<group>"; };
+		E89C11F6F517354A6466E9618DC81EA0 /* KBRecordDataHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordDataHandler.swift; path = kbeaconlib2/Classes/KBRecordDataHandler.swift; sourceTree = "<group>"; };
+		F1568A11A15584648E1B82036A23EE2B /* KBRecordPIR.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBRecordPIR.swift; path = kbeaconlib2/Classes/KBRecordPIR.swift; sourceTree = "<group>"; };
+		F3338390214B72D5C38D39C4CEDBAE0D /* kbeaconlib2 */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = kbeaconlib2; path = libkbeaconlib2.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F44FF4008687DA2789B97A908F9E6FC6 /* KBCfgType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBCfgType.swift; path = kbeaconlib2/Classes/KBCfgType.swift; sourceTree = "<group>"; };
+		F5CDE252ACA3DFE258E08AD633FC5753 /* KBAdvMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvMode.swift; path = kbeaconlib2/Classes/KBAdvMode.swift; sourceTree = "<group>"; };
+		F6C21809445BF9849315E0602A9A43F1 /* KBConnPara.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBConnPara.swift; path = kbeaconlib2/Classes/KBConnPara.swift; sourceTree = "<group>"; };
+		FBEE42B96E77A15070F4DFF7147830EF /* Pods-kBeacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-kBeacon.release.xcconfig"; sourceTree = "<group>"; };
+		FCBBD6E009921F85228A20EED2F8BD9E /* KBSensorType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBSensorType.swift; path = kbeaconlib2/Classes/KBSensorType.swift; sourceTree = "<group>"; };
+		FDEE97613D88FF301DC3913B62FE1DB6 /* KBAdvPacketEBeacon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KBAdvPacketEBeacon.swift; path = kbeaconlib2/Classes/KBAdvPacketEBeacon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5FCD38208FC8116BAC9BC9B4F8085788 /* Frameworks */ = {
+		1C093CAD12165B9443A57DF84242EB9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87E9290FAEE1A260C3FBF9AF9E5F3E55 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -31,20 +192,104 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A78164688AB644159A2337EA2D08ED82 /* Targets Support Files */ = {
+		6E0ACDCDF1C1BE64462B4D30021C7661 /* kbeaconlib2 */ = {
 			isa = PBXGroup;
 			children = (
-				D94F7FA5B7BB9965FD3E9E202BCAAD03 /* Pods-kBeacon */,
+				E65192ED2C69D0724171E8644E1DE3C4 /* ByteConvert.swift */,
+				24B2D009CA8DC8CC662C5BE2DE736FD1 /* KBAccSensorValue.swift */,
+				F5CDE252ACA3DFE258E08AD633FC5753 /* KBAdvMode.swift */,
+				D7FD231B4D71041BB99647EF7F84BA73 /* KBAdvPacketAOA.swift */,
+				3883ED711148538D7B60FFD61F847B2C /* KBAdvPacketBase.swift */,
+				FDEE97613D88FF301DC3913B62FE1DB6 /* KBAdvPacketEBeacon.swift */,
+				1207F5CE9FEEEE1756CDC1E083BF5C66 /* KBAdvPacketEddyTLM.swift */,
+				8EBA54F3EF1848F9ED3BECD75DA5A163 /* KBAdvPacketEddyUID.swift */,
+				6D85CEAD613C1C20F9F63B45B7C9BAAE /* KBAdvPacketEddyURL.swift */,
+				4FF271377DD5BFA509AB7460552BBDA8 /* KBAdvPacketHandler.swift */,
+				6F234F1A2E9F67AEB923819449698C44 /* KBAdvPacketIBeacon.swift */,
+				72643B21E129E19D34642B6E73DEF716 /* KBAdvPacketSensor.swift */,
+				D75B1C73874F6061A8FFB775412A71DC /* KBAdvPacketSystem.swift */,
+				62164DBA0D85DA43459F77365035FDB7 /* KBAdvTxPower.swift */,
+				68E58437BF261C8B75873D039A37C1EB /* KBAdvType.swift */,
+				9AF677301FDFEA74E93DAD02A8D853B2 /* KBAuthHandler.swift */,
+				9BAB5440DC3D3F1DBAE35236249A94DD /* KBCfgAdvAOA.swift */,
+				B944A84ADF0A3CA58695132F303B5E37 /* KBCfgAdvBase.swift */,
+				B4C7A3D672F74C1971825D3ECC131B80 /* KBCfgAdvEBeacon.swift */,
+				6EDDD285AFE166C4FE95BC08165702E0 /* KBCfgAdvEddyTLM.swift */,
+				2DF49C3353791DFFCFFEEEA38A1EF59E /* KBCfgAdvEddyUID.swift */,
+				786E517B377EAC8E5136D1B3FDDEB227 /* KBCfgAdvEddyURL.swift */,
+				DA2C35994E776482F383B9150C54DF40 /* KBCfgAdvIBeacon.swift */,
+				C4326A5AD02ED943AA1390E658967C32 /* KBCfgAdvKSensor.swift */,
+				D48054CCF725FBC8380DAFCBC6D3F45F /* KBCfgAdvNull.swift */,
+				CBCDF6BF4DDC890DEFA2180D95D2FB91 /* KBCfgAdvSystem.swift */,
+				DF529F395E5D7A26BA79B08EB4D2B0CB /* KBCfgBase.swift */,
+				A071DFBA47F5E4C57DE45A16E709EF6E /* KBCfgCommon.swift */,
+				13CE2682A29B8D36648D266E7FB009D1 /* KBCfgHandler.swift */,
+				D67D12E8754889C427A6852F2E73DCE1 /* KBCfgSensorAcc.swift */,
+				B819C8D5B7919F218099CE3813275ADC /* KBCfgSensorBase.swift */,
+				6951E3AF296A9038D507136D0E9AB7A0 /* KBCfgSensorCO2.swift */,
+				E5824A3DFD5EDEA08C913CB4E1CEB468 /* KBCfgSensorGEO.swift */,
+				94DFFCB887EEE2BCF0B0D6AFC80AEA4B /* KBCfgSensorHT.swift */,
+				02A6E3697194BD14CD0D88E7FCE98ABA /* KBCfgSensorLight.swift */,
+				992BFB45A4B802E0F37A29B37062862B /* KBCfgSensorNFC.swift */,
+				C8E8FA8E8E67A1747F7950EDFDA56305 /* KBCfgSensorPIR.swift */,
+				3CFCD3DBDC0DCE565F8537E60B403EA1 /* KBCfgSensorScan.swift */,
+				36A3098FF2EBE39EC953223EC02C8758 /* KBCfgSensorVOC.swift */,
+				C173F8A237AA173E62305AFCC52CCA0D /* KBCfgTrigger.swift */,
+				5FC506EACBA0140296637F832D2CC042 /* KBCfgTriggerAngle.swift */,
+				34A15A7D8E67FC5D62EB86A5BF0B974C /* KBCfgTriggerMotion.swift */,
+				F44FF4008687DA2789B97A908F9E6FC6 /* KBCfgType.swift */,
+				F6C21809445BF9849315E0602A9A43F1 /* KBConnPara.swift */,
+				C2600F9E331A1E5819DF3AA282F76CDA /* KBeacon.swift */,
+				526B877CFBC7176A42D49629D7635A5B /* KBeaconsMgr.swift */,
+				08A88AE73B4DC8B98A7146A79FD9CD36 /* KBException.swift */,
+				D8418530A3AFF8272405F3C6E44D5A2C /* KBPreferance.swift */,
+				317B7D4C2D5E5C3066DDB85E93612A35 /* KBRecordAlarm.swift */,
+				A249CC7F8460A002FEB8A3981C84A031 /* KBRecordBase.swift */,
+				BF25BD00582EB08B5579E0E7A3C2CE68 /* KBRecordCO2.swift */,
+				E89C11F6F517354A6466E9618DC81EA0 /* KBRecordDataHandler.swift */,
+				89559EF214605B5C494F583255F9EE3F /* KBRecordDataRsp.swift */,
+				42737E805430D574EFDD641EF198CD89 /* KBRecordHumidity.swift */,
+				A8D0D70F32FB18F92A4203DDE30DC0DB /* KBRecordInfoRsp.swift */,
+				4169B8C98408EF8CDAE772F815A71342 /* KBRecordLight.swift */,
+				F1568A11A15584648E1B82036A23EE2B /* KBRecordPIR.swift */,
+				26EE852CA204461C70CC9CD6367A4A65 /* KBRecordVOC.swift */,
+				FCBBD6E009921F85228A20EED2F8BD9E /* KBSensorType.swift */,
+				A939C232D59FC92812262540FE2A52CC /* KBTimeRange.swift */,
+				3D488B0805D09D2054628B0A7C6EBDAC /* KBTLMElapseTime.swift */,
+				D99C28BED08159BA0712132CE7411419 /* KBTriggerAction.swift */,
+				2B751FA351E7053D7BFEA2BEBEBDB8BF /* KBTriggerAdvChgMode.swift */,
+				494E83BA054B3A3850932CECE3449CD0 /* KBTriggerType.swift */,
+				001645B6C3F070F9FE5BD0E2E563C50C /* KBUtility.swift */,
+				05E55C8A855873D2D565FAEDBAAFB5D8 /* UTCTime.swift */,
+				E0FE0D24D4DB6400B868CEF33F3D0ACD /* Support Files */,
+			);
+			name = kbeaconlib2;
+			path = kbeaconlib2;
+			sourceTree = "<group>";
+		};
+		955FD6E8316C5EF43F90301832C7506F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F3338390214B72D5C38D39C4CEDBAE0D /* kbeaconlib2 */,
+				5FA2861294799E4843D2D5BEA134F213 /* Pods-kBeacon */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9E7886AAF5CE5CD5DC9EF985CB6C3DA4 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA88C09A85456C510F9326706270ED8C /* Pods-kBeacon */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		B1F126C5971144F2A7BF963C7635A61E /* Products */ = {
+		CDC7D5C550BF4E526FBA1305017C2A6F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5FA2861294799E4843D2D5BEA134F213 /* Pods-kBeacon */,
+				6E0ACDCDF1C1BE64462B4D30021C7661 /* kbeaconlib2 */,
 			);
-			name = Products;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -52,8 +297,9 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				B1F126C5971144F2A7BF963C7635A61E /* Products */,
-				A78164688AB644159A2337EA2D08ED82 /* Targets Support Files */,
+				CDC7D5C550BF4E526FBA1305017C2A6F /* Pods */,
+				955FD6E8316C5EF43F90301832C7506F /* Products */,
+				9E7886AAF5CE5CD5DC9EF985CB6C3DA4 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,14 +310,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D94F7FA5B7BB9965FD3E9E202BCAAD03 /* Pods-kBeacon */ = {
+		E0FE0D24D4DB6400B868CEF33F3D0ACD /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				E3D64F2B7B3B794C0ECD8A104A96607C /* Pods-kBeacon-acknowledgements.markdown */,
-				C2A79F18F4B27D3D3BB1024A728217B0 /* Pods-kBeacon-acknowledgements.plist */,
-				DEE741834C1F23C4939F71B2491F39F7 /* Pods-kBeacon-dummy.m */,
-				9D4C7727D26405E98C88590FB90845F7 /* Pods-kBeacon.debug.xcconfig */,
-				635DD1975A6450604C6C393BEA966C98 /* Pods-kBeacon.release.xcconfig */,
+				31FB45C10B588B0F21EEF12CFA79DCCC /* kbeaconlib2.modulemap */,
+				B048417435A8E114FDDA8A0F95AB49DB /* kbeaconlib2-dummy.m */,
+				942B4679CED70A986569E0A312163AF7 /* kbeaconlib2-prefix.pch */,
+				035E83367EFA890AABD0DF51628547AC /* kbeaconlib2-umbrella.h */,
+				127732E36B89CAC707B3779DE6B19E02 /* kbeaconlib2.debug.xcconfig */,
+				2348E3CCBB2A5EE76CFC0E322C109A91 /* kbeaconlib2.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/kbeaconlib2";
+			sourceTree = "<group>";
+		};
+		FA88C09A85456C510F9326706270ED8C /* Pods-kBeacon */ = {
+			isa = PBXGroup;
+			children = (
+				8390C8AA6B9392E775BBE39C5787610E /* Pods-kBeacon.modulemap */,
+				38943F404177F4AFC34C5E770A683F30 /* Pods-kBeacon-acknowledgements.markdown */,
+				3009BF23AAB58B572DCE54B985924130 /* Pods-kBeacon-acknowledgements.plist */,
+				770D1C9EC8D8C931DAA35869E3B27A9F /* Pods-kBeacon-dummy.m */,
+				2AC816F6E107A043B00FD2B01CAA5129 /* Pods-kBeacon-umbrella.h */,
+				E60E41F77095C42CAF095C14DBDF9354 /* Pods-kBeacon.debug.xcconfig */,
+				FBEE42B96E77A15070F4DFF7147830EF /* Pods-kBeacon.release.xcconfig */,
 			);
 			name = "Pods-kBeacon";
 			path = "Target Support Files/Pods-kBeacon";
@@ -80,10 +342,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		123EA456C8DF67DDFF1B7709AE5B9F69 /* Headers */ = {
+		B1510A4BF56D690FEC2873737CB9B636 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				957C9CC56B4847ADDDDE9616350BE3FB /* kbeaconlib2-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFA9A1598CB7894701B569FADF1EDC3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4740DC27FC8148CEB960346EBFB1B6 /* Pods-kBeacon-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,19 +363,38 @@
 /* Begin PBXNativeTarget section */
 		4AE58DACAB0F63363C407C1839910943 /* Pods-kBeacon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8FD965348983AE1EAA1C344222A26DC4 /* Build configuration list for PBXNativeTarget "Pods-kBeacon" */;
+			buildConfigurationList = 2073AE99E634F63FA7D23DCAF6235D52 /* Build configuration list for PBXNativeTarget "Pods-kBeacon" */;
 			buildPhases = (
-				123EA456C8DF67DDFF1B7709AE5B9F69 /* Headers */,
-				D1DDFE651429AD82496770400EE7C993 /* Sources */,
-				5FCD38208FC8116BAC9BC9B4F8085788 /* Frameworks */,
+				DCFA9A1598CB7894701B569FADF1EDC3 /* Headers */,
+				E9B62A7551E9232B9429A062AD14CE42 /* Sources */,
+				87E9290FAEE1A260C3FBF9AF9E5F3E55 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9330F6D705F5B32E62FB621AE11B4A55 /* PBXTargetDependency */,
+			);
+			name = "Pods-kBeacon";
+			productName = "Pods-kBeacon";
+			productReference = 5FA2861294799E4843D2D5BEA134F213 /* Pods-kBeacon */;
+			productType = "com.apple.product-type.library.static";
+		};
+		989F78AFDFDA7F6A720659D6364CF384 /* kbeaconlib2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB188AFFAC58E72CFF700F6F45C72D72 /* Build configuration list for PBXNativeTarget "kbeaconlib2" */;
+			buildPhases = (
+				B1510A4BF56D690FEC2873737CB9B636 /* Headers */,
+				128E8D90593F31BBA192E36F6464EB1C /* Sources */,
+				1C093CAD12165B9443A57DF84242EB9A /* Frameworks */,
+				20507D1C6DEA7019895DC85C48993EA2 /* Copy generated compatibility header */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-kBeacon";
-			productName = "Pods-kBeacon";
-			productReference = 5FA2861294799E4843D2D5BEA134F213 /* Pods-kBeacon */;
+			name = kbeaconlib2;
+			productName = kbeaconlib2;
+			productReference = F3338390214B72D5C38D39C4CEDBAE0D /* kbeaconlib2 */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -127,27 +417,197 @@
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = B1F126C5971144F2A7BF963C7635A61E /* Products */;
+			productRefGroup = 955FD6E8316C5EF43F90301832C7506F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				989F78AFDFDA7F6A720659D6364CF384 /* kbeaconlib2 */,
 				4AE58DACAB0F63363C407C1839910943 /* Pods-kBeacon */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		20507D1C6DEA7019895DC85C48993EA2 /* Copy generated compatibility header */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h",
+				"${PODS_ROOT}/Headers/Public/kbeaconlib2/kbeaconlib2.modulemap",
+				"${PODS_ROOT}/Headers/Public/kbeaconlib2/kbeaconlib2-umbrella.h",
+			);
+			name = "Copy generated compatibility header";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap",
+				"${BUILT_PRODUCTS_DIR}/kbeaconlib2-umbrella.h",
+				"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/kbeaconlib2/kbeaconlib2.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/kbeaconlib2/kbeaconlib2-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		D1DDFE651429AD82496770400EE7C993 /* Sources */ = {
+		128E8D90593F31BBA192E36F6464EB1C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFA38C77DF3430F98C66C0E5FF521DFA /* Pods-kBeacon-dummy.m in Sources */,
+				E7832D92CBDC3468073842088983F11E /* ByteConvert.swift in Sources */,
+				CA7E589459842BEFF1A720D067B37AE9 /* KBAccSensorValue.swift in Sources */,
+				E156C3E08C40ECC67872399C92876370 /* KBAdvMode.swift in Sources */,
+				85E61802B54C5B05ADF1AA7D25525C48 /* KBAdvPacketAOA.swift in Sources */,
+				8C433815F6C3E80C0338C328F5459EB1 /* KBAdvPacketBase.swift in Sources */,
+				7592BEB3AB55B3E2F16ED731C5E91C79 /* KBAdvPacketEBeacon.swift in Sources */,
+				1CEF2811E8C73561DD5444F003E7B524 /* KBAdvPacketEddyTLM.swift in Sources */,
+				BA07AC6AA3A36D2ED692A87027B690ED /* KBAdvPacketEddyUID.swift in Sources */,
+				75DD3E260A9E3001AB01FEC589FD7C0E /* KBAdvPacketEddyURL.swift in Sources */,
+				39102582DED8921FF03216DDE745439A /* KBAdvPacketHandler.swift in Sources */,
+				3CA2CE4FADA05F26B2BB66A2E229C902 /* KBAdvPacketIBeacon.swift in Sources */,
+				EF1C2C56B84F28E7B7232F781F9BA75A /* KBAdvPacketSensor.swift in Sources */,
+				6077C01661E77E77306BA96A6ADE4C31 /* KBAdvPacketSystem.swift in Sources */,
+				37CFAF2271AB7EC0F11A503C0AA90C4D /* KBAdvTxPower.swift in Sources */,
+				F9AD9E9A275F7A73A1BE65BE2F22FCB7 /* KBAdvType.swift in Sources */,
+				3291CF5E9EF0EE5EA1E0FB6D30E0C8E7 /* KBAuthHandler.swift in Sources */,
+				E5F915AB77BCF5A931938507C7CB8466 /* KBCfgAdvAOA.swift in Sources */,
+				9B0EE4F582CB4EE00D273A1D21B69456 /* KBCfgAdvBase.swift in Sources */,
+				977F935813035414C22BC92AF383CA8C /* KBCfgAdvEBeacon.swift in Sources */,
+				CAD34199F358CC7EB5B850B425EFEA87 /* KBCfgAdvEddyTLM.swift in Sources */,
+				1CA0341FD871BC71D31473FEAD1D5EEC /* KBCfgAdvEddyUID.swift in Sources */,
+				F5A332BC068D83F077AA28D312160C6B /* KBCfgAdvEddyURL.swift in Sources */,
+				A94A8F363E61FFAE0B77E5FFC878B87F /* KBCfgAdvIBeacon.swift in Sources */,
+				54B3CF95D1744744763AB7FA06CDEBC3 /* KBCfgAdvKSensor.swift in Sources */,
+				3E2489AFDF8DBB93A5752C743D004A2E /* KBCfgAdvNull.swift in Sources */,
+				4FF836048FA366ED46BF9FE56DD64C47 /* KBCfgAdvSystem.swift in Sources */,
+				72F876A4BF79AB7D7E0589666706598D /* KBCfgBase.swift in Sources */,
+				F934B579E74767BF46AC637338496C15 /* KBCfgCommon.swift in Sources */,
+				C43233E4231928DD60586A75842BBFA2 /* KBCfgHandler.swift in Sources */,
+				974CDD196C25DA2FBF2FBAA246371819 /* KBCfgSensorAcc.swift in Sources */,
+				1403B1ADD22D8E3CDC5C9BAF24021000 /* KBCfgSensorBase.swift in Sources */,
+				5798B857DD5148469CB300662B8251FF /* KBCfgSensorCO2.swift in Sources */,
+				14BDEDE64F54671EDAE5B0B838F7D772 /* KBCfgSensorGEO.swift in Sources */,
+				366257A50F2BC906011C47A994967F58 /* KBCfgSensorHT.swift in Sources */,
+				BFE272DB60A1C1F8F7704A3EADA3E869 /* KBCfgSensorLight.swift in Sources */,
+				5E418C4514799CB728A096C5B2520D8E /* KBCfgSensorNFC.swift in Sources */,
+				F59583B65671E1FF498AF3B20E5F183C /* KBCfgSensorPIR.swift in Sources */,
+				8992CD808853383ADC9FC3B50883C065 /* KBCfgSensorScan.swift in Sources */,
+				DC9109ACEDD9BF6DEF1B8F5C00F476C3 /* KBCfgSensorVOC.swift in Sources */,
+				C4E0190BF500EB35579ED73CA2151803 /* KBCfgTrigger.swift in Sources */,
+				D94BF31F2E2E34EFEB35DC77B7F117E0 /* KBCfgTriggerAngle.swift in Sources */,
+				88170D0652685BDB6EA8A66FA6715FF2 /* KBCfgTriggerMotion.swift in Sources */,
+				5F680299F6EA57C563CCFCABC718C978 /* KBCfgType.swift in Sources */,
+				CC17C694F05912102E996798276580E0 /* KBConnPara.swift in Sources */,
+				D86B80CC525D3F8078AFE8B0C8508DEC /* KBeacon.swift in Sources */,
+				DC711A9894D105DEEDFA8F08DB870557 /* kbeaconlib2-dummy.m in Sources */,
+				6DDABD55AA8745345A90AAAA471287F1 /* KBeaconsMgr.swift in Sources */,
+				19B65059BA990E2A3A6C7673E6B84825 /* KBException.swift in Sources */,
+				9ED42FDBD3E1A0ED2DCE193E80C4FAEC /* KBPreferance.swift in Sources */,
+				8864ABA0C8F33B5F4F8A6A49B286C9D0 /* KBRecordAlarm.swift in Sources */,
+				B20E59C6A0D9268490185817998959C2 /* KBRecordBase.swift in Sources */,
+				01D44B50DD7270BE2742B571A5721D56 /* KBRecordCO2.swift in Sources */,
+				1B4352ABFCE0F44EA2CEDD6BFFC689DD /* KBRecordDataHandler.swift in Sources */,
+				ADFA5465824B825E2407D91F9CD68EFE /* KBRecordDataRsp.swift in Sources */,
+				0774A4C33887DACCE35B6817E1204282 /* KBRecordHumidity.swift in Sources */,
+				99349B5D96D0274615A579EB923E4764 /* KBRecordInfoRsp.swift in Sources */,
+				95991D66B8E85B6FA248606B8DC775C6 /* KBRecordLight.swift in Sources */,
+				6B064C4FD7E8E2CD5883376D2727D793 /* KBRecordPIR.swift in Sources */,
+				AD71E69613ED5EF93E259B3596C667F1 /* KBRecordVOC.swift in Sources */,
+				EBFD50EF54C22DC14B7B14AB5917E165 /* KBSensorType.swift in Sources */,
+				243BD07E827881188FC48E76C5976207 /* KBTimeRange.swift in Sources */,
+				716E65B5F2321981365014398F40539F /* KBTLMElapseTime.swift in Sources */,
+				D477659BE6766E397F01354BAA83B80B /* KBTriggerAction.swift in Sources */,
+				1682540C30D35F3C5382CDFAA4F067EC /* KBTriggerAdvChgMode.swift in Sources */,
+				9C46A55A711A97E719251950A4424CE2 /* KBTriggerType.swift in Sources */,
+				3714B1D8A7E7C96E03E25F488EEA5B6B /* KBUtility.swift in Sources */,
+				F88ECF122C57284BBB9CCC19F5B97AD4 /* UTCTime.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9B62A7551E9232B9429A062AD14CE42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE8734C926B878241C598DB01AE01082 /* Pods-kBeacon-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9330F6D705F5B32E62FB621AE11B4A55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = kbeaconlib2;
+			target = 989F78AFDFDA7F6A720659D6364CF384 /* kbeaconlib2 */;
+			targetProxy = 4EDE7D7B234CB3732841413EAEDAF853 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		10F51FC72DD4FF12A8B9345765FDFB2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 127732E36B89CAC707B3779DE6B19E02 /* kbeaconlib2.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/kbeaconlib2/kbeaconlib2-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MODULEMAP_FILE = Headers/Public/kbeaconlib2/kbeaconlib2.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = kbeaconlib2;
+				PRODUCT_NAME = kbeaconlib2;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		11A6729CBBC5223A8853F8033C4756BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2348E3CCBB2A5EE76CFC0E322C109A91 /* kbeaconlib2.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/kbeaconlib2/kbeaconlib2-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MODULEMAP_FILE = Headers/Public/kbeaconlib2/kbeaconlib2.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = kbeaconlib2;
+				PRODUCT_NAME = kbeaconlib2;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		1E35793412A9D447CE4BE2C3D16A8D6B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -214,9 +674,9 @@
 			};
 			name = Debug;
 		};
-		915BFAAAD7B26355ED7D4C78304E7EA5 /* Debug */ = {
+		1EC1D6D39A8A6EC72976B6CB3214C7E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D4C7727D26405E98C88590FB90845F7 /* Pods-kBeacon.debug.xcconfig */;
+			baseConfigurationReference = E60E41F77095C42CAF095C14DBDF9354 /* Pods-kBeacon.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -227,6 +687,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-kBeacon/Pods-kBeacon.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -237,9 +698,9 @@
 			};
 			name = Debug;
 		};
-		B912361726C5B279660A8E0130FD8D90 /* Release */ = {
+		255B79A04A71303EFD45ABF2CCA9B8F9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 635DD1975A6450604C6C393BEA966C98 /* Pods-kBeacon.release.xcconfig */;
+			baseConfigurationReference = FBEE42B96E77A15070F4DFF7147830EF /* Pods-kBeacon.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -250,6 +711,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-kBeacon/Pods-kBeacon.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -326,6 +788,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2073AE99E634F63FA7D23DCAF6235D52 /* Build configuration list for PBXNativeTarget "Pods-kBeacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EC1D6D39A8A6EC72976B6CB3214C7E5 /* Debug */,
+				255B79A04A71303EFD45ABF2CCA9B8F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -335,11 +806,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8FD965348983AE1EAA1C344222A26DC4 /* Build configuration list for PBXNativeTarget "Pods-kBeacon" */ = {
+		DB188AFFAC58E72CFF700F6F45C72D72 /* Build configuration list for PBXNativeTarget "kbeaconlib2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				915BFAAAD7B26355ED7D4C78304E7EA5 /* Debug */,
-				B912361726C5B279660A8E0130FD8D90 /* Release */,
+				10F51FC72DD4FF12A8B9345765FDFB2E /* Debug */,
+				11A6729CBBC5223A8853F8033C4756BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

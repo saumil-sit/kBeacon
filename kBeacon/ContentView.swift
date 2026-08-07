@@ -1,9 +1,5 @@
-//  ContentView.swift
-//  kBeacon
-
 import SwiftUI
-import CoreBluetooth
-// import kbeaconlib2   // Uncomment only after the SDK is added correctly
+import kbeaconlib2
 
 struct ContentView: View {
 
@@ -11,13 +7,16 @@ struct ContentView: View {
 
     var body: some View {
 
-        NavigationView {
+        NavigationStack {
 
-            VStack(spacing: 16) {
+            VStack {
 
+                // Bluetooth Status
                 Text("Bluetooth: \(beaconManager.bluetoothState)")
                     .font(.headline)
+                    .padding(.top)
 
+                // Buttons
                 HStack(spacing: 16) {
 
                     Button("Start Scan") {
@@ -30,7 +29,9 @@ struct ContentView: View {
                     }
                     .buttonStyle(.bordered)
                 }
+                .padding()
 
+                // Device List
                 if beaconManager.devices.isEmpty {
 
                     Spacer()
@@ -42,26 +43,25 @@ struct ContentView: View {
 
                 } else {
 
-                    List(beaconManager.devices, id: \.mac) { beacon in
+                    List(beaconManager.devices) { beacon in
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading) {
 
                             Text(beacon.name)
                                 .font(.headline)
 
-                            Text("Identifier: \(beacon.mac)")
-                                .font(.subheadline)
+                            Text(beacon.mac)
 
                             Text("RSSI: \(beacon.rssi)")
-                                .font(.subheadline)
+
+                            Text(beacon.uuid)
+                                .font(.caption)
                         }
-                        .padding(.vertical, 4)
                     }
                     .listStyle(.plain)
                 }
             }
-            .padding()
-            .navigationTitle("KBeacon Devices")
+            .navigationTitle("KBeacon Scanner")
         }
     }
 }

@@ -1,4 +1,4 @@
-framework module Pods_kBeacon {
+module Pods_kBeacon {
   umbrella header "Pods-kBeacon-umbrella.h"
 
   export *
