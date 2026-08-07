@@ -6,13 +6,34 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		26D408397F5100EA45A871E5 /* libPods-kBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB239E7E9587FD24965011F /* libPods-kBeacon.a */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		3AB239E7E9587FD24965011F /* libPods-kBeacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-kBeacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BB03A41E5F9E89D71DA3E08 /* Pods-kBeacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kBeacon.release.xcconfig"; path = "Target Support Files/Pods-kBeacon/Pods-kBeacon.release.xcconfig"; sourceTree = "<group>"; };
+		5B83FA674501E6AA02EB7E7A /* Pods_kBeacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kBeacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97B486A654FB753975AC383F /* Pods-kBeacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kBeacon.debug.xcconfig"; path = "Target Support Files/Pods-kBeacon/Pods-kBeacon.debug.xcconfig"; sourceTree = "<group>"; };
 		D28737A43024BC9B00459B70 /* kBeacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kBeacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D2A5C71B3025A49800327A25 /* Exceptions for "kBeacon" folder in "kBeacon" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D28737A33024BC9B00459B70 /* kBeacon */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D28737A63024BC9B00459B70 /* kBeacon */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D2A5C71B3025A49800327A25 /* Exceptions for "kBeacon" folder in "kBeacon" target */,
+			);
 			path = kBeacon;
 			sourceTree = "<group>";
 		};
@@ -23,17 +44,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26D408397F5100EA45A871E5 /* libPods-kBeacon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		223A828D75A5855A76AB4386 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97B486A654FB753975AC383F /* Pods-kBeacon.debug.xcconfig */,
+				4BB03A41E5F9E89D71DA3E08 /* Pods-kBeacon.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D277C9223025B6E30001DA78 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B83FA674501E6AA02EB7E7A /* Pods_kBeacon.framework */,
+				3AB239E7E9587FD24965011F /* libPods-kBeacon.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D287379B3024BC9B00459B70 = {
 			isa = PBXGroup;
 			children = (
 				D28737A63024BC9B00459B70 /* kBeacon */,
+				D277C9223025B6E30001DA78 /* Frameworks */,
 				D28737A53024BC9B00459B70 /* Products */,
+				223A828D75A5855A76AB4386 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,6 +94,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D28737AF3024BC9D00459B70 /* Build configuration list for PBXNativeTarget "kBeacon" */;
 			buildPhases = (
+				5F142CBF653761FC0CDB6B52 /* [CP] Check Pods Manifest.lock */,
 				D28737A03024BC9B00459B70 /* Sources */,
 				D28737A13024BC9B00459B70 /* Frameworks */,
 				D28737A23024BC9B00459B70 /* Resources */,
@@ -64,8 +107,6 @@
 				D28737A63024BC9B00459B70 /* kBeacon */,
 			);
 			name = kBeacon;
-			packageProductDependencies = (
-			);
 			productName = kBeacon;
 			productReference = D28737A43024BC9B00459B70 /* kBeacon.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +154,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5F142CBF653761FC0CDB6B52 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-kBeacon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D28737A03024BC9B00459B70 /* Sources */ = {
@@ -248,6 +314,7 @@
 		};
 		D28737B03024BC9D00459B70 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97B486A654FB753975AC383F /* Pods-kBeacon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -256,6 +323,9 @@
 				DEVELOPMENT_TEAM = 4Y2387HP2F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = kBeacon/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby KBeacon devices.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Bluetooth access is required for beacon communication.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -266,7 +336,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.kBeacon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shaligram.kbeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -280,6 +350,7 @@
 		};
 		D28737B13024BC9D00459B70 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BB03A41E5F9E89D71DA3E08 /* Pods-kBeacon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -288,6 +359,9 @@
 				DEVELOPMENT_TEAM = 4Y2387HP2F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = kBeacon/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby KBeacon devices.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Bluetooth access is required for beacon communication.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -298,7 +372,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.kBeacon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shaligram.kbeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
