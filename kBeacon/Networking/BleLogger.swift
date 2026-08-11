@@ -60,7 +60,7 @@ final class BleLogger {
             elapsedMs: elapsedMs,
             deviceMac: deviceMac,
             phoneModel: UIDevice.current.model,
-            osVersion: UIDevice.current.systemVersion,
+            osVersion: String(ProcessInfo.processInfo.operatingSystemVersion.majorVersion),
             appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
             sessionId: sessionId,
             extra: extra

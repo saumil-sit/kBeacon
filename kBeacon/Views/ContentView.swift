@@ -146,6 +146,10 @@ struct ContentView: View {
             .navigationTitle("KBeacon Scanner")
             .onAppear {
                 viewModel.startScan()
+                viewModel.logAppOpened()
+            }
+            .onAppear {
+                viewModel.startScan()
             }
             .sheet(item: $viewModel.authFailedBeacon) { beacon in
 

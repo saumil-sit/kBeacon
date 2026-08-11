@@ -32,9 +32,14 @@ final class SupabaseClient {
         request.httpBody = try encoder.encode(entries)
 
         let (data, response) = try await session.data(for: request)
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw SupabaseError.invalidResponse
         }
+
+        // Add this line
+        print("Supabase status:", httpResponse.statusCode)
+
         guard (200...299).contains(httpResponse.statusCode) else {
             let body = String(data: data, encoding: .utf8) ?? ""
             throw SupabaseError.httpError(httpResponse.statusCode, body)
