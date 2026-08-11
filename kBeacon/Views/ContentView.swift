@@ -3,7 +3,7 @@ import kbeaconlib2
 
 struct ContentView: View {
 
-    @StateObject private var beaconManager = BeaconManager()
+    @ObservedObject var viewModel: BeaconViewModel
 
     var body: some View {
 
@@ -13,18 +13,23 @@ struct ContentView: View {
 
                 // Connection status card
                 ConnectionStatusView(
-                    state: beaconManager.connectionState,
-                    deviceLabel: beaconManager.connectedDeviceLabel,
-                    onDisconnect: { beaconManager.disconnectCurrent() }
+                    state: viewModel.connectionState,
+                    deviceLabel: viewModel.connectedDeviceLabel,
+                    onDisconnect: {
+                        viewModel.disconnect()
+                    }
                 )
 
                 // Bluetooth status
                 HStack {
+
                     Circle()
-                        .fill(beaconManager.bluetoothState == "Powered On" ? .green : .red)
+                        .fill(viewModel.isScanning ? Color.green : Color.red)
                         .frame(width: 10, height: 10)
 
-                    Text("Bluetooth: \(beaconManager.bluetoothState)")
+                    Text(viewModel.isScanning
+                         ? "Bluetooth: Scanning"
+                         : "Bluetooth: Idle")
                         .font(.headline)
 
                     Spacer()
@@ -34,33 +39,33 @@ struct ContentView: View {
                 HStack(spacing: 16) {
 
                     Button("Start Scan") {
-                        beaconManager.startScan()
+                        viewModel.startScan()
                     }
                     .buttonStyle(.borderedProminent)
 
                     Button("Stop Scan") {
-                        beaconManager.stopScan()
+                        viewModel.stopScan()
                     }
                     .buttonStyle(.bordered)
 
-                    if beaconManager.isScanning {
+                    if viewModel.isScanning {
                         ProgressView()
                             .scaleEffect(0.8)
                     }
                 }
 
                 // Live data status
-                if beaconManager.connectionState == .Connected {
+                if viewModel.connectionState == .Connected {
 
-                    LiveDataVerdictView(packetCount: beaconManager.packetCount)
+                    LiveDataVerdictView(packetCount: viewModel.packetCount)
 
-                    if !beaconManager.receivedPackets.isEmpty {
+                    if !viewModel.receivedPackets.isEmpty {
 
                         Text("Received packets")
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        List(beaconManager.receivedPackets) { packet in
+                        List(viewModel.receivedPackets) { packet in
                             ReceivedPacketRowView(entry: packet)
                         }
                         .frame(height: 220)
@@ -70,11 +75,11 @@ struct ContentView: View {
                 Divider()
 
                 // Device list
-                if beaconManager.devices.isEmpty {
+                if viewModel.discoveredBeacons.isEmpty {
 
                     Spacer()
 
-                    Text(beaconManager.isScanning
+                    Text(viewModel.isScanning
                          ? "Scanning for KBeacon devices…"
                          : "No KBeacon devices found")
                         .foregroundColor(.secondary)
@@ -84,9 +89,10 @@ struct ContentView: View {
                 } else {
 
                     ScrollView {
+
                         LazyVStack(alignment: .leading, spacing: 12) {
 
-                            ForEach(Array(beaconManager.devices.enumerated()), id: \.offset) { _, device in
+                            ForEach(viewModel.discoveredBeacons, id: \.id) { beacon in
 
                                 VStack(alignment: .leading, spacing: 6) {
 
@@ -94,34 +100,36 @@ struct ContentView: View {
 
                                         VStack(alignment: .leading, spacing: 2) {
 
-                                            Text(device.name)
-                                                .font(.headline)
+                                            Text(
+                                                beacon.name?.isEmpty == false
+                                                ? beacon.name!
+                                                : "(unnamed device)"
+                                            )
+                                            .font(.headline)
 
-                                            Text(device.mac)
+                                            Text(beacon.mac ?? "Unknown MAC")
                                                 .font(.caption)
 
-                                            Text("RSSI: \(device.rssi)")
+                                            Text("RSSI: \(beacon.rssi)")
                                                 .font(.caption)
-
-                                            Text(device.uuid)
-                                                .font(.caption2)
-                                                .foregroundColor(.secondary)
                                         }
 
                                         Spacer()
 
                                         Button("Connect") {
-                                            beaconManager.connect(device.beacon)
+                                            viewModel.connect(beacon)
                                         }
                                         .buttonStyle(.borderedProminent)
                                     }
 
                                     // Advertisement data
-                                    if !device.advData.isEmpty {
+                                    if let mac = beacon.mac,
+                                       let advData = viewModel.advDataByMac[mac],
+                                       !advData.isEmpty {
 
                                         Divider()
 
-                                        ForEach(device.advData, id: \.id) { item in
+                                        ForEach(advData) { item in
                                             KeyValueRowView(item: item)
                                         }
                                     }
@@ -137,18 +145,17 @@ struct ContentView: View {
             .padding()
             .navigationTitle("KBeacon Scanner")
             .onAppear {
-                beaconManager.startScan()
+                viewModel.startScan()
             }
-            .sheet(item: $beaconManager.authFailedBeacon) { beacon in
+            .sheet(item: $viewModel.authFailedBeacon) { beacon in
 
                 PasswordPromptView(
                     deviceLabel: beacon.name ?? beacon.mac ?? "Device",
                     onCancel: {
-                        beaconManager.authFailedBeacon = nil
+                        viewModel.dismissPasswordPrompt()
                     },
-                    onConfirm: { _ in
-                        // Retry logic can be added later
-                        beaconManager.authFailedBeacon = nil
+                    onConfirm: { password in
+                        viewModel.retryConnectWithPassword(password)
                     }
                 )
             }
@@ -157,5 +164,16 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+
+    let client = SupabaseClient(
+        baseURL: "https://eeqlwtpeqdtbenscaijt.supabase.co",
+        apiKey: "sb_publishable_JNnsFdpBxEPX6NKM-fA8Rw_7TsA339L"
+    )
+
+    let logger = BleLogger(client: client)
+
+    return ContentView(
+        viewModel: BeaconViewModel(bleLogger: logger)
+    )
 }
+

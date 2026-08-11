@@ -10,7 +10,8 @@ import kbeaconlib2
 
 struct BeaconDeviceModel: Identifiable, Hashable {
 
-    let id = UUID()
+    var id: String { mac }
+
     let beacon: KBeacon
     let name: String
     let mac: String

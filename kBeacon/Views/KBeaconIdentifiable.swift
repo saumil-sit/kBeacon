@@ -6,8 +6,11 @@
 //
 
 
+import Foundation
 import kbeaconlib2
 
-extension KBeacon: Identifiable {
-    public var id: String { self.mac ?? UUID().uuidString }
+extension KBeacon: @retroactive Identifiable {
+    public var id: String {
+        self.mac ?? UUID().uuidString
+    }
 }
