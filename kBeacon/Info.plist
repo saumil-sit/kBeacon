@@ -9,6 +9,9 @@
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>This app uses Bluetooth to scan nearby beacon devices.</string>
 
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Location access is required to detect nearby beacon devices.</string>
+
     <key>UIBackgroundModes</key>
     <array>
         <string>bluetooth-central</string>

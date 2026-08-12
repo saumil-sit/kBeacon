@@ -10,6 +10,9 @@ import SwiftUI
 @main
 struct kBeaconApp: App {
 
+    // ADD THIS LINE
+    private let locationPermissionManager = LocationPermissionManager()
+
     @StateObject private var viewModel: BeaconViewModel
 
     init() {
