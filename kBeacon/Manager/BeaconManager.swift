@@ -23,26 +23,30 @@ final class BeaconManager: NSObject, ObservableObject {
 
     override init() {
         super.init()
-        KBeaconsMgr.sharedBeaconManager.delegate = self
-    }
 
+        print("BeaconManager init called")
+
+        KBeaconsMgr.sharedBeaconManager.delegate = self
+
+        print("KBeacon delegate assigned")
+    }
     func startScan() {
 
-        guard bluetoothState == "Powered On" else {
-
-            print("Bluetooth is not powered on yet")
-            return
-        }
+        print("Start scan button tapped")
 
         devices.removeAll()
+
+        isScanning = true
 
         let started = KBeaconsMgr.sharedBeaconManager.startScanning()
 
         print("KBeacon scan started: \\(started)")
 
-        isScanning = started
+        if !started {
+            isScanning = false
+        }
     }
-
+    
     func stopScan() {
         KBeaconsMgr.sharedBeaconManager.stopScanning()
         isScanning = false

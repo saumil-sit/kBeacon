@@ -14,6 +14,7 @@ struct kBeaconApp: App {
 
     @StateObject private var beaconManager = BeaconManager()
     @StateObject private var viewModel: BeaconViewModel
+    private let bluetoothPermissionManager = BluetoothPermissionManager()
 
     init() {
 

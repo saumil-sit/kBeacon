@@ -43,11 +43,13 @@ struct ContentView: View {
                         beaconManager.startScan()
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(beaconManager.isScanning)
 
                     Button("Stop Scan") {
                         beaconManager.stopScan()
                     }
                     .buttonStyle(.bordered)
+                    .disabled(!beaconManager.isScanning)
 
                     if beaconManager.isScanning {
                         ProgressView()
