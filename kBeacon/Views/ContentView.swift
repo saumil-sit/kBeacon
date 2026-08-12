@@ -4,6 +4,7 @@ import kbeaconlib2
 struct ContentView: View {
 
     @ObservedObject var viewModel: BeaconViewModel
+    @ObservedObject var beaconManager: BeaconManager
 
     var body: some View {
 
@@ -24,10 +25,10 @@ struct ContentView: View {
                 HStack {
 
                     Circle()
-                        .fill(viewModel.isScanning ? Color.green : Color.red)
+                        .fill(beaconManager.isScanning ? Color.green : Color.red)
                         .frame(width: 10, height: 10)
 
-                    Text(viewModel.isScanning
+                    Text(beaconManager.isScanning
                          ? "Bluetooth: Scanning"
                          : "Bluetooth: Idle")
                         .font(.headline)
@@ -39,16 +40,16 @@ struct ContentView: View {
                 HStack(spacing: 16) {
 
                     Button("Start Scan") {
-                        viewModel.startScan()
+                        beaconManager.startScan()
                     }
                     .buttonStyle(.borderedProminent)
 
                     Button("Stop Scan") {
-                        viewModel.stopScan()
+                        beaconManager.stopScan()
                     }
                     .buttonStyle(.bordered)
 
-                    if viewModel.isScanning {
+                    if beaconManager.isScanning {
                         ProgressView()
                             .scaleEffect(0.8)
                     }
@@ -75,11 +76,11 @@ struct ContentView: View {
                 Divider()
 
                 // Device list
-                if viewModel.discoveredBeacons.isEmpty {
+                if beaconManager.devices.isEmpty {
 
                     Spacer()
 
-                    Text(viewModel.isScanning
+                    Text(beaconManager.isScanning
                          ? "Scanning for KBeacon devices…"
                          : "No KBeacon devices found")
                         .foregroundColor(.secondary)
@@ -92,7 +93,7 @@ struct ContentView: View {
 
                         LazyVStack(alignment: .leading, spacing: 12) {
 
-                            ForEach(viewModel.discoveredBeacons, id: \.id) { beacon in
+                            ForEach(beaconManager.devices, id: \.id) { beacon in
 
                                 VStack(alignment: .leading, spacing: 6) {
 
@@ -101,30 +102,29 @@ struct ContentView: View {
                                         VStack(alignment: .leading, spacing: 2) {
 
                                             Text(
-                                                beacon.name?.isEmpty == false
-                                                ? beacon.name!
+                                                beacon.name.isEmpty == false
+                                                ? beacon.name
                                                 : "(unnamed device)"
                                             )
                                             .font(.headline)
 
-                                            Text(beacon.mac ?? "Unknown MAC")
+                                            Text(beacon.mac.isEmpty ? "Unknown MAC" : beacon.mac)
                                                 .font(.caption)
 
-                                            Text("RSSI: \(beacon.rssi)")
+                                            Text("RSSI: \\(beacon.rssi)")
                                                 .font(.caption)
                                         }
 
                                         Spacer()
 
                                         Button("Connect") {
-                                            viewModel.connect(beacon)
+                                            viewModel.connect(beacon.beacon)
                                         }
                                         .buttonStyle(.borderedProminent)
                                     }
 
                                     // Advertisement data
-                                    if let mac = beacon.mac,
-                                       let advData = viewModel.advDataByMac[mac],
+                                    if let advData = viewModel.advDataByMac[beacon.mac],
                                        !advData.isEmpty {
 
                                         Divider()
@@ -145,11 +145,7 @@ struct ContentView: View {
             .padding()
             .navigationTitle("KBeacon Scanner")
             .onAppear {
-                viewModel.startScan()
                 viewModel.logAppOpened()
-            }
-            .onAppear {
-                viewModel.startScan()
             }
             .sheet(item: $viewModel.authFailedBeacon) { beacon in
 
@@ -176,8 +172,11 @@ struct ContentView: View {
 
     let logger = BleLogger(client: client)
 
+    let viewModel = BeaconViewModel(bleLogger: logger)
+    let beaconManager = BeaconManager()
+
     return ContentView(
-        viewModel: BeaconViewModel(bleLogger: logger)
+        viewModel: viewModel,
+        beaconManager: beaconManager
     )
 }
-

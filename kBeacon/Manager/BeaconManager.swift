@@ -27,8 +27,19 @@ final class BeaconManager: NSObject, ObservableObject {
     }
 
     func startScan() {
+
+        guard bluetoothState == "Powered On" else {
+
+            print("Bluetooth is not powered on yet")
+            return
+        }
+
         devices.removeAll()
+
         let started = KBeaconsMgr.sharedBeaconManager.startScanning()
+
+        print("KBeacon scan started: \\(started)")
+
         isScanning = started
     }
 
@@ -126,20 +137,37 @@ extension BeaconManager: KBeaconMgrDelegate {
         Task { @MainActor in
 
             switch newState {
+
             case .PowerOn:
+
                 bluetoothState = "Powered On"
 
+                print("Bluetooth powered on")
+
+                // Auto start scan once Bluetooth is ready
+                if !isScanning {
+                    startScan()
+                }
+
             case .PowerOff:
+
                 bluetoothState = "Powered Off"
+                isScanning = false
 
             case .Unauthorized:
+
                 bluetoothState = "Unauthorized"
+                isScanning = false
 
             case .Unknown:
+
                 bluetoothState = "Unknown"
+                isScanning = false
 
             @unknown default:
+
                 bluetoothState = "Unknown"
+                isScanning = false
             }
         }
     }
