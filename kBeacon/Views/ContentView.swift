@@ -40,12 +40,14 @@ struct ContentView: View {
                 HStack(spacing: 16) {
 
                     Button("Start Scan") {
+                        viewModel.startScan()
                         beaconManager.startScan()
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(beaconManager.isScanning)
 
                     Button("Stop Scan") {
+                        viewModel.stopScan()
                         beaconManager.stopScan()
                     }
                     .buttonStyle(.bordered)

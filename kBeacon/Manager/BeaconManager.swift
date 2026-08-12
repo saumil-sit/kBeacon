@@ -6,6 +6,8 @@ import kbeaconlib2
 @MainActor
 final class BeaconManager: NSObject, ObservableObject {
 
+    // MARK: - Published state
+
     @Published var devices: [BeaconDeviceModel] = []
     @Published var bluetoothState: String = "Unknown"
     @Published var isScanning = false
@@ -21,6 +23,14 @@ final class BeaconManager: NSObject, ObservableObject {
     @Published var packetCount = 0
     @Published var receivedPackets: [ReceivedPacketEntry] = []
 
+    // MARK: - Callbacks for logging
+
+    var onScanResult: ((Bool) -> Void)?
+    var onDeviceDiscovered: ((BeaconDeviceModel) -> Void)?
+    var onConnectionStateChanged: ((KBeacon, KBConnState, KBConnEvtReason) -> Void)?
+
+    // MARK: - Init
+
     override init() {
         super.init()
 
@@ -30,29 +40,36 @@ final class BeaconManager: NSObject, ObservableObject {
 
         print("KBeacon delegate assigned")
     }
+
+    // MARK: - Scan
+
     func startScan() {
 
         print("Start scan button tapped")
 
         devices.removeAll()
 
-        isScanning = true
-
         let started = KBeaconsMgr.sharedBeaconManager.startScanning()
 
         print("KBeacon scan started: \\(started)")
 
-        if !started {
-            isScanning = false
-        }
+        isScanning = started
+
+        // Notify logger
+        onScanResult?(started)
     }
-    
+
     func stopScan() {
+
+        print("Stop scan button tapped")
+
         KBeaconsMgr.sharedBeaconManager.stopScanning()
+
         isScanning = false
     }
 
-    // Connect with default password
+    // MARK: - Connect
+
     func connect(_ beacon: KBeacon) {
         connectionState = .Connecting
         connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
@@ -63,22 +80,29 @@ final class BeaconManager: NSObject, ObservableObject {
             delegate: self
         )
 
+        print("Connect API accepted: \\(accepted)")
+
         if !accepted {
+
             connectionState = .Disconnected
             connectedDeviceLabel = nil
         }
     }
 
     func disconnectCurrent() {
+
+        print("Disconnect current device")
+
         connectionState = .Disconnected
         connectedDeviceLabel = nil
         packetCount = 0
         receivedPackets.removeAll()
     }
 
-    // MARK: Advertisement parsing
+    // MARK: - Advertisement parsing
 
     private func parseAdvData(_ beacon: KBeacon) -> [KeyValue] {
+
         var rows: [KeyValue] = []
 
         guard let packets = beacon.allAdvPackets else { return rows }
@@ -90,7 +114,7 @@ final class BeaconManager: NSObject, ObservableObject {
                 if sensor.batteryLevel != KBCfgBase.INVALID_UINT16 {
                     rows.append(KeyValue(
                         key: "Battery",
-                        value: "\(sensor.batteryLevel) mV"
+                        value: "\\(sensor.batteryLevel) mV"
                     ))
                 }
 
@@ -122,7 +146,7 @@ extension BeaconManager: KBeaconMgrDelegate {
 
         Task { @MainActor in
 
-            self.devices = beacons.map { beacon in
+            let mapped = beacons.map { beacon in
 
                 BeaconDeviceModel(
                     beacon: beacon,
@@ -132,6 +156,15 @@ extension BeaconManager: KBeaconMgrDelegate {
                     rssi: Int(beacon.rssi),
                     advData: self.parseAdvData(beacon)
                 )
+            }
+
+            self.devices = mapped
+
+            print("Discovered devices count: \\(mapped.count)")
+
+            // Notify logger
+            for device in mapped {
+                onDeviceDiscovered?(device)
             }
         }
     }
@@ -145,33 +178,31 @@ extension BeaconManager: KBeaconMgrDelegate {
             case .PowerOn:
 
                 bluetoothState = "Powered On"
-
-                print("Bluetooth powered on")
-
-                // Auto start scan once Bluetooth is ready
-                if !isScanning {
-                    startScan()
-                }
+                print("KBeacon Bluetooth powered on")
 
             case .PowerOff:
 
                 bluetoothState = "Powered Off"
                 isScanning = false
+                print("KBeacon Bluetooth powered off")
 
             case .Unauthorized:
 
                 bluetoothState = "Unauthorized"
                 isScanning = false
+                print("KBeacon Bluetooth unauthorized")
 
             case .Unknown:
 
                 bluetoothState = "Unknown"
                 isScanning = false
+                print("KBeacon Bluetooth unknown")
 
             @unknown default:
 
                 bluetoothState = "Unknown"
                 isScanning = false
+                print("KBeacon Bluetooth unknown default")
             }
         }
     }
@@ -189,7 +220,14 @@ extension BeaconManager: ConnStateDelegate {
 
         Task { @MainActor in
 
+            print("Connection state changed: \\(state) reason: \\(evt)")
+
             self.connectionState = state
+
+            if state == .Connected {
+
+                self.connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
+            }
 
             if state == .Disconnected {
 
@@ -199,6 +237,9 @@ extension BeaconManager: ConnStateDelegate {
                     self.authFailedBeacon = beacon
                 }
             }
+
+            // Notify logger
+            onConnectionStateChanged?(beacon, state, evt)
         }
     }
 }
@@ -231,6 +272,8 @@ extension BeaconManager: NotifyDataDelegate {
             )
 
             self.receivedPackets.insert(entry, at: 0)
+
+            print("Packet received count: \\(self.packetCount)")
         }
     }
 }
