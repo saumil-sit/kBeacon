@@ -115,7 +115,7 @@ struct ContentView: View {
                                             Text(beacon.mac.isEmpty ? "Unknown MAC" : beacon.mac)
                                                 .font(.caption)
 
-                                            Text("RSSI: \\(beacon.rssi)")
+                                            Text("RSSI: \(beacon.rssi)")
                                                 .font(.caption)
                                         }
 

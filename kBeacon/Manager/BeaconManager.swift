@@ -15,6 +15,8 @@ final class BeaconManager: NSObject, ObservableObject {
     // Connection state
     @Published var connectionState: KBConnState = .Disconnected
     @Published var connectedDeviceLabel: String?
+    @Published var connectedBeacon: KBeacon?
+
 
     // Password prompt
     @Published var authFailedBeacon: KBeacon?
@@ -53,7 +55,7 @@ final class BeaconManager: NSObject, ObservableObject {
 
         let started = KBeaconsMgr.sharedBeaconManager.startScanning()
 
-        print("KBeacon scan started: \\(started)")
+        print("KBeacon scan started: \(started)")
 
         isScanning = started
 
@@ -75,6 +77,7 @@ final class BeaconManager: NSObject, ObservableObject {
     func connect(_ beacon: KBeacon) {
         connectionState = .Connecting
         connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
+        connectedBeacon = beacon
 
         let accepted = beacon.connect(
             "0000000000000000",
@@ -82,23 +85,23 @@ final class BeaconManager: NSObject, ObservableObject {
             delegate: self
         )
 
-        print("Connect API accepted: \\(accepted)")
+        print("Connect API accepted: \(accepted)")
 
         if !accepted {
 
             connectionState = .Disconnected
             connectedDeviceLabel = nil
+            connectedBeacon = nil
         }
     }
     
     // MARK: - Disconnect
 
     func disconnect() {
-
         print("Disconnect tapped")
-
+        connectedBeacon?.disconnect()
+        connectedBeacon = nil
         KBeaconsMgr.sharedBeaconManager.stopScanning()
-
         connectionState = .Disconnected
         connectedDeviceLabel = nil
         packetCount = 0
@@ -119,6 +122,7 @@ final class BeaconManager: NSObject, ObservableObject {
 
         connectionState = .Connecting
         connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
+        connectedBeacon = beacon
 
         let accepted = beacon.connect(
             password,
@@ -126,18 +130,22 @@ final class BeaconManager: NSObject, ObservableObject {
             delegate: self
         )
 
-        print("Retry connect accepted: \\(accepted)")
+        print("Retry connect accepted: \(accepted)")
 
         if !accepted {
 
             connectionState = .Disconnected
             connectedDeviceLabel = nil
+            connectedBeacon = nil
         }
     }
 
     func disconnectCurrent() {
 
         print("Disconnect current device")
+
+        connectedBeacon?.disconnect()
+        connectedBeacon = nil
 
         connectionState = .Disconnected
         connectedDeviceLabel = nil
@@ -160,7 +168,7 @@ final class BeaconManager: NSObject, ObservableObject {
                 if sensor.batteryLevel != KBCfgBase.INVALID_UINT16 {
                     rows.append(KeyValue(
                         key: "Battery",
-                        value: "\\(sensor.batteryLevel) mV"
+                        value: "\(sensor.batteryLevel) mV"
                     ))
                 }
 
@@ -211,7 +219,7 @@ extension BeaconManager: KBeaconMgrDelegate {
                 uniqueKeysWithValues: mapped.map { ($0.mac, $0.advData) }
             )
 
-            print("Discovered devices count: \\(mapped.count)")
+            print("Discovered devices count: \(mapped.count)")
 
             for device in mapped {
                 onDeviceDiscovered?(device)
@@ -270,7 +278,7 @@ extension BeaconManager: ConnStateDelegate {
 
         Task { @MainActor in
 
-            print("Connection state changed: \\(state) reason: \\(evt)")
+            print("Connection state changed: \(state) reason: \(evt)")
 
             self.connectionState = state
 
@@ -282,6 +290,7 @@ extension BeaconManager: ConnStateDelegate {
             if state == .Disconnected {
 
                 self.connectedDeviceLabel = nil
+                self.connectedBeacon = nil
 
                 if evt == .ConnAuthFail {
                     self.authFailedBeacon = beacon
@@ -323,7 +332,7 @@ extension BeaconManager: NotifyDataDelegate {
 
             self.receivedPackets.insert(entry, at: 0)
 
-            print("Packet received count: \\(self.packetCount)")
+            print("Packet received count: \(self.packetCount)")
         }
     }
 }
