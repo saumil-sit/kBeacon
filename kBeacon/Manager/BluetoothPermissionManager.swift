@@ -37,7 +37,7 @@ final class BluetoothPermissionManager: NSObject, CBCentralManagerDelegate {
             print("CoreBluetooth unsupported")
 
         default:
-            print("CoreBluetooth state: \\(central.state.rawValue)")
+            print("CoreBluetooth state: \(central.state.rawValue)")
         }
     }
 }

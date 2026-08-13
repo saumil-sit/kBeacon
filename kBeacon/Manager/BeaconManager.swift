@@ -32,6 +32,10 @@ final class BeaconManager: NSObject, ObservableObject {
     var onScanResult: ((Bool) -> Void)?
     var onDeviceDiscovered: ((BeaconDeviceModel) -> Void)?
     var onConnectionStateChanged: ((KBeacon, KBConnState, KBConnEvtReason) -> Void)?
+    var onBeaconsDiscoveredBatch: ((Int) -> Void)?
+    var onAdvDataChanged: ((_ mac: String, _ rssi: Int, _ advData: [KeyValue]) -> Void)?
+    var onBluetoothStateChanged: ((String) -> Void)?
+    var onConnectRejected: ((KBeacon) -> Void)?
 
     // MARK: - Init
 
@@ -92,9 +96,10 @@ final class BeaconManager: NSObject, ObservableObject {
             connectionState = .Disconnected
             connectedDeviceLabel = nil
             connectedBeacon = nil
+            onConnectRejected?(beacon)
         }
     }
-    
+
     // MARK: - Disconnect
 
     func disconnect() {
@@ -137,6 +142,7 @@ final class BeaconManager: NSObject, ObservableObject {
             connectionState = .Disconnected
             connectedDeviceLabel = nil
             connectedBeacon = nil
+            onConnectRejected?(beacon)
         }
     }
 
@@ -200,6 +206,8 @@ extension BeaconManager: KBeaconMgrDelegate {
 
         Task { @MainActor in
 
+            let previousAdvDataByMac = self.advDataByMac
+
             let mapped = beacons.map { beacon in
 
                 BeaconDeviceModel(
@@ -220,11 +228,31 @@ extension BeaconManager: KBeaconMgrDelegate {
             )
 
             print("Discovered devices count: \(mapped.count)")
+            onBeaconsDiscoveredBatch?(mapped.count)
 
             for device in mapped {
+
+                if !device.advData.isEmpty {
+
+                    let previous = previousAdvDataByMac[device.mac] ?? []
+
+                    if !self.advDataEqual(previous, device.advData) {
+                        onAdvDataChanged?(device.mac, device.rssi, device.advData)
+                    }
+                }
+
                 onDeviceDiscovered?(device)
             }
         }
+    }
+
+    // KeyValue's synthesized Hashable includes its random `id`, so `==` on [KeyValue]
+    // would never match across discovery passes even with identical key/value pairs.
+    private func advDataEqual(_ lhs: [KeyValue], _ rhs: [KeyValue]) -> Bool {
+
+        guard lhs.count == rhs.count else { return false }
+
+        return zip(lhs, rhs).allSatisfy { $0.key == $1.key && $0.value == $1.value }
     }
 
     nonisolated func onCentralBleStateChange(newState: BLECentralMgrState) {
@@ -262,6 +290,8 @@ extension BeaconManager: KBeaconMgrDelegate {
                 isScanning = false
                 print("KBeacon Bluetooth unknown default")
             }
+
+            onBluetoothStateChanged?(bluetoothState)
         }
     }
 }

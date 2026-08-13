@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import kbeaconlib2
 
 @main
 struct kBeaconApp: App {
@@ -25,9 +26,33 @@ struct kBeaconApp: App {
 
         let logger = BleLogger(client: client)
 
-        _viewModel = StateObject(
-            wrappedValue: BeaconViewModel(bleLogger: logger)
-        )
+        let viewModel = BeaconViewModel(bleLogger: logger)
+        _viewModel = StateObject(wrappedValue: viewModel)
+
+        beaconManager.onScanResult = { [weak beaconManager] started in
+            guard !started, let beaconManager else { return }
+            viewModel.logScanFailed(reason: beaconManager.bluetoothState)
+        }
+
+        beaconManager.onBeaconsDiscoveredBatch = { count in
+            viewModel.logBeaconsDiscovered(count: count)
+        }
+
+        beaconManager.onAdvDataChanged = { mac, rssi, advData in
+            viewModel.logAdvDataChanged(mac: mac, rssi: rssi, advData: advData)
+        }
+
+        beaconManager.onBluetoothStateChanged = { state in
+            viewModel.logCentralBleStateChanged(state: state)
+        }
+
+        beaconManager.onConnectRejected = { beacon in
+            viewModel.logConnectRejected(mac: beacon.mac ?? "Unknown")
+        }
+
+        beaconManager.onConnectionStateChanged = { beacon, state, reason in
+            viewModel.logConnStateChanged(mac: beacon.mac ?? "Unknown", state: state, reason: reason)
+        }
     }
 
     var body: some Scene {

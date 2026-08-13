@@ -18,6 +18,7 @@ struct ContentView: View {
                     deviceLabel: beaconManager.connectedDeviceLabel,
                     onDisconnect: {
                         beaconManager.disconnect()
+                        viewModel.disconnect()
                     }
                 )
 
@@ -158,8 +159,10 @@ struct ContentView: View {
                     deviceLabel: beacon.name ?? beacon.mac ?? "Device",
                     onCancel: {
                         beaconManager.dismissPasswordPrompt()
+                        viewModel.dismissPasswordPrompt()
                     },
                     onConfirm: { password in
+                        viewModel.retryConnectWithPassword(password)
                         beaconManager.retryConnectWithPassword(password)
                     }
                 )
