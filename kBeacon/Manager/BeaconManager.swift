@@ -22,6 +22,8 @@ final class BeaconManager: NSObject, ObservableObject {
     // Packet history
     @Published var packetCount = 0
     @Published var receivedPackets: [ReceivedPacketEntry] = []
+    
+    @Published var advDataByMac: [String: [KeyValue]] = [:]
 
     // MARK: - Callbacks for logging
 
@@ -81,6 +83,50 @@ final class BeaconManager: NSObject, ObservableObject {
         )
 
         print("Connect API accepted: \\(accepted)")
+
+        if !accepted {
+
+            connectionState = .Disconnected
+            connectedDeviceLabel = nil
+        }
+    }
+    
+    // MARK: - Disconnect
+
+    func disconnect() {
+
+        print("Disconnect tapped")
+
+        KBeaconsMgr.sharedBeaconManager.stopScanning()
+
+        connectionState = .Disconnected
+        connectedDeviceLabel = nil
+        packetCount = 0
+        receivedPackets.removeAll()
+    }
+
+    // MARK: - Password prompt helpers
+
+    func dismissPasswordPrompt() {
+        authFailedBeacon = nil
+    }
+
+    func retryConnectWithPassword(_ password: String) {
+
+        guard let beacon = authFailedBeacon else { return }
+
+        authFailedBeacon = nil
+
+        connectionState = .Connecting
+        connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
+
+        let accepted = beacon.connect(
+            password,
+            timeout: 20.0,
+            delegate: self
+        )
+
+        print("Retry connect accepted: \\(accepted)")
 
         if !accepted {
 
@@ -160,9 +206,13 @@ extension BeaconManager: KBeaconMgrDelegate {
 
             self.devices = mapped
 
+            // Store adv data by MAC
+            self.advDataByMac = Dictionary(
+                uniqueKeysWithValues: mapped.map { ($0.mac, $0.advData) }
+            )
+
             print("Discovered devices count: \\(mapped.count)")
 
-            // Notify logger
             for device in mapped {
                 onDeviceDiscovered?(device)
             }

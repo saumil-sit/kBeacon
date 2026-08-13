@@ -14,10 +14,10 @@ struct ContentView: View {
 
                 // Connection status card
                 ConnectionStatusView(
-                    state: viewModel.connectionState,
-                    deviceLabel: viewModel.connectedDeviceLabel,
+                    state: beaconManager.connectionState,
+                    deviceLabel: beaconManager.connectedDeviceLabel,
                     onDisconnect: {
-                        viewModel.disconnect()
+                        beaconManager.disconnect()
                     }
                 )
 
@@ -40,15 +40,15 @@ struct ContentView: View {
                 HStack(spacing: 16) {
 
                     Button("Start Scan") {
-                        viewModel.startScan()
                         beaconManager.startScan()
+                        viewModel.startScan()
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(beaconManager.isScanning)
 
                     Button("Stop Scan") {
-                        viewModel.stopScan()
                         beaconManager.stopScan()
+                        viewModel.stopScan()
                     }
                     .buttonStyle(.bordered)
                     .disabled(!beaconManager.isScanning)
@@ -60,17 +60,17 @@ struct ContentView: View {
                 }
 
                 // Live data status
-                if viewModel.connectionState == .Connected {
+                if beaconManager.connectionState == .Connected {
 
-                    LiveDataVerdictView(packetCount: viewModel.packetCount)
+                    LiveDataVerdictView(packetCount: beaconManager.packetCount)
 
-                    if !viewModel.receivedPackets.isEmpty {
+                    if !beaconManager.receivedPackets.isEmpty {
 
                         Text("Received packets")
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        List(viewModel.receivedPackets) { packet in
+                        List(beaconManager.receivedPackets) { packet in
                             ReceivedPacketRowView(entry: packet)
                         }
                         .frame(height: 220)
@@ -122,13 +122,14 @@ struct ContentView: View {
                                         Spacer()
 
                                         Button("Connect") {
+                                            beaconManager.connect(beacon.beacon)
                                             viewModel.connect(beacon.beacon)
                                         }
                                         .buttonStyle(.borderedProminent)
                                     }
 
                                     // Advertisement data
-                                    if let advData = viewModel.advDataByMac[beacon.mac],
+                                    if let advData = beaconManager.advDataByMac[beacon.mac],
                                        !advData.isEmpty {
 
                                         Divider()
@@ -151,15 +152,15 @@ struct ContentView: View {
             .onAppear {
                 viewModel.logAppOpened()
             }
-            .sheet(item: $viewModel.authFailedBeacon) { beacon in
+            .sheet(item: $beaconManager.authFailedBeacon) { beacon in
 
                 PasswordPromptView(
                     deviceLabel: beacon.name ?? beacon.mac ?? "Device",
                     onCancel: {
-                        viewModel.dismissPasswordPrompt()
+                        beaconManager.dismissPasswordPrompt()
                     },
                     onConfirm: { password in
-                        viewModel.retryConnectWithPassword(password)
+                        beaconManager.retryConnectWithPassword(password)
                     }
                 )
             }
