@@ -230,4 +230,119 @@ final class BeaconViewModel: ObservableObject {
             break
         }
     }
+
+    // MARK: - Diagnostics, trigger configuration, and live-data events
+
+    func logCommonCfgUnavailable(mac: String) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "diagnostics",
+            event: "common_cfg_null",
+            deviceMac: mac
+        )
+    }
+
+    func logDeviceCapabilities(mac: String, capabilities: [String: Bool], model: String?, version: String?) {
+        var extra = capabilities.mapValues { $0 ? "true" : "false" }
+        extra["model"] = model ?? "unknown"
+        extra["version"] = version ?? "unknown"
+
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "diagnostics",
+            event: "device_capabilities",
+            deviceMac: mac,
+            extra: extra
+        )
+    }
+
+    func logTriggerConfigRead(mac: String, triggerType: Int, triggerAction: Int) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "diagnostics",
+            event: "trigger_config_read",
+            deviceMac: mac,
+            extra: ["triggerType": "\(triggerType)", "triggerAction": "\(triggerAction)"]
+        )
+    }
+
+    func logTriggerNotConfigured(mac: String, triggerType: Int) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "diagnostics",
+            event: "trigger_not_configured",
+            deviceMac: mac,
+            extra: ["triggerType": "\(triggerType)"]
+        )
+    }
+
+    func logTriggerConfigureSkipped(mac: String, reason: String) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "configure",
+            event: "trigger_configure_skipped",
+            deviceMac: mac,
+            extra: ["reason": reason]
+        )
+    }
+
+    func logTriggerConfigureRequested(mac: String, triggerType: Int, triggerPara: Int?) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "configure",
+            event: "trigger_configure_requested",
+            deviceMac: mac,
+            extra: ["triggerType": "\(triggerType)", "triggerPara": triggerPara.map { "\($0)" } ?? ""]
+        )
+    }
+
+    func logTriggerConfigureResult(mac: String, triggerType: Int, success: Bool, error: String?) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "configure",
+            event: "trigger_configure_result",
+            deviceMac: mac,
+            extra: ["triggerType": "\(triggerType)", "success": "\(success)", "error": error ?? ""]
+        )
+    }
+
+    func logSubscribeResult(mac: String, success: Bool, error: String?, elapsedMs: Int?) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "subscribe",
+            event: "subscribe_result",
+            elapsedMs: elapsedMs,
+            deviceMac: mac,
+            extra: ["success": "\(success)", "error": error ?? ""]
+        )
+    }
+
+    func logPacketReceived(mac: String, evt: Int, byteCount: Int, packetNumber: Int, rawHex: String, elapsedMs: Int?) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "data",
+            event: "packet_received",
+            elapsedMs: elapsedMs,
+            deviceMac: mac,
+            extra: [
+                "eventType": "\(evt)",
+                "byteCount": "\(byteCount)",
+                "packetNumber": "\(packetNumber)",
+                "rawHex": rawHex
+            ]
+        )
+    }
+
+    func logNoDataTimeout(mac: String, elapsedMs: Int?) {
+        bleLogger.log(
+            correlationId: connectCorrelationId,
+            stage: "data",
+            event: "no_data_timeout",
+            elapsedMs: elapsedMs,
+            deviceMac: mac,
+            extra: ["reason": "No data received within \(noDataTimeoutSeconds)s of subscribing."]
+        )
+    }
+
+    private let noDataTimeoutSeconds = 30
 }

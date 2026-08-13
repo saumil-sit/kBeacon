@@ -36,6 +36,24 @@ final class BeaconManager: NSObject, ObservableObject {
     var onAdvDataChanged: ((_ mac: String, _ rssi: Int, _ advData: [KeyValue]) -> Void)?
     var onBluetoothStateChanged: ((String) -> Void)?
     var onConnectRejected: ((KBeacon) -> Void)?
+    var onCommonCfgUnavailable: ((_ mac: String) -> Void)?
+    var onDeviceCapabilities: ((_ mac: String, _ capabilities: [String: Bool], _ model: String?, _ version: String?) -> Void)?
+    var onTriggerConfigRead: ((_ mac: String, _ triggerType: Int, _ triggerAction: Int) -> Void)?
+    var onTriggerNotConfigured: ((_ mac: String, _ triggerType: Int) -> Void)?
+    var onTriggerConfigureSkipped: ((_ mac: String, _ reason: String) -> Void)?
+    var onTriggerConfigureRequested: ((_ mac: String, _ triggerType: Int, _ triggerPara: Int?) -> Void)?
+    var onTriggerConfigureResult: ((_ mac: String, _ triggerType: Int, _ success: Bool, _ error: String?) -> Void)?
+    var onSubscribeResult: ((_ mac: String, _ success: Bool, _ error: String?, _ elapsedMs: Int?) -> Void)?
+    var onPacketReceivedLogged: ((_ mac: String, _ evt: Int, _ byteCount: Int, _ packetNumber: Int, _ rawHex: String, _ elapsedMs: Int?) -> Void)?
+    var onNoDataTimeout: ((_ mac: String, _ elapsedMs: Int?) -> Void)?
+
+    // The device should report a humidity/temperature reading on this interval once
+    // subscribed - same value as the Android side's periodicReportIntervalSeconds.
+    private let periodicReportIntervalSeconds = 15
+    private let noDataTimeoutSeconds: UInt64 = 30
+
+    private var connectedAt: Date?
+    private var noDataWatchdogToken = 0
 
     // MARK: - Init
 
@@ -104,6 +122,8 @@ final class BeaconManager: NSObject, ObservableObject {
 
     func disconnect() {
         print("Disconnect tapped")
+        noDataWatchdogToken += 1
+        connectedAt = nil
         connectedBeacon?.disconnect()
         connectedBeacon = nil
         KBeaconsMgr.sharedBeaconManager.stopScanning()
@@ -150,6 +170,8 @@ final class BeaconManager: NSObject, ObservableObject {
 
         print("Disconnect current device")
 
+        noDataWatchdogToken += 1
+        connectedAt = nil
         connectedBeacon?.disconnect()
         connectedBeacon = nil
 
@@ -195,6 +217,152 @@ final class BeaconManager: NSObject, ObservableObject {
         }
 
         return rows
+    }
+
+    // MARK: - Diagnostics, trigger configuration, and live-data subscription
+    // Mirrors the Android ViewModel's logDeviceDiagnostics/configureAvailableTriggers/
+    // subscribeSensorDataNotify flow, run once per successful connection.
+
+    private func elapsedMsSinceConnected() -> Int? {
+        guard let connectedAt else { return nil }
+        return Int(Date().timeIntervalSince(connectedAt) * 1000)
+    }
+
+    private func logDeviceDiagnostics(_ beacon: KBeacon) {
+
+        let mac = beacon.mac ?? "Unknown"
+
+        guard let commonCfg = beacon.getCommonCfg() else {
+            onCommonCfgUnavailable?(mac)
+            return
+        }
+
+        let capabilities: [String: Bool] = [
+            "humidity": commonCfg.isSupportHumiditySensor(),
+            "co2": commonCfg.isSupportCO2Sensor(),
+            "light": commonCfg.isSupportLightSensor(),
+            "pir": commonCfg.isSupportPIRSensor(),
+            "acc": commonCfg.isSupportAccSensor(),
+            "geo": commonCfg.isSupportGEOSensor(),
+            "button": commonCfg.isSupportButton()
+        ]
+
+        onDeviceCapabilities?(mac, capabilities, commonCfg.getModel(), commonCfg.getVersion())
+
+        var triggersToCheck: [Int] = []
+        if commonCfg.isSupportHumiditySensor() { triggersToCheck.append(KBTriggerType.HTHumidityPeriodically) }
+        if commonCfg.isSupportPIRSensor() { triggersToCheck.append(KBTriggerType.PIRBodyInfraredDetected) }
+        if commonCfg.isSupportLightSensor() { triggersToCheck.append(KBTriggerType.LightLUXAbove) }
+        if commonCfg.isSupportAccSensor() { triggersToCheck.append(KBTriggerType.AccMotion) }
+        if commonCfg.isSupportButton() { triggersToCheck.append(KBTriggerType.BtnSingleClick) }
+
+        for triggerType in triggersToCheck {
+
+            if let cfg = beacon.getTriggerCfg(triggerType) {
+                onTriggerConfigRead?(mac, triggerType, cfg.getTriggerAction())
+            } else {
+                onTriggerNotConfigured?(mac, triggerType)
+            }
+        }
+    }
+
+    // Writes a Report2App trigger for every sensor this device actually reports having,
+    // so whatever sensors exist on the connected beacon all report to the app.
+    private func configureAvailableTriggers(_ beacon: KBeacon, onComplete: @escaping () -> Void) {
+
+        let mac = beacon.mac ?? "Unknown"
+
+        guard let commonCfg = beacon.getCommonCfg() else {
+            onTriggerConfigureSkipped?(mac, "commonCfg null")
+            onComplete()
+            return
+        }
+
+        var triggersToWrite: [KBCfgTrigger] = []
+
+        if commonCfg.isSupportHumiditySensor() {
+            let trigger = KBCfgTrigger(0, triggerType: KBTriggerType.HTHumidityPeriodically)
+            trigger.setTriggerAction(KBTriggerAction.ReportToApp)
+            trigger.setTriggerPara(periodicReportIntervalSeconds)
+            triggersToWrite.append(trigger)
+        }
+
+        if commonCfg.isSupportAccSensor() {
+            let trigger = KBCfgTrigger(0, triggerType: KBTriggerType.AccMotion)
+            trigger.setTriggerAction(KBTriggerAction.ReportToApp)
+            trigger.setTriggerPara(KBCfgTrigger.DEFAULT_MOTION_SENSITIVITY)
+            triggersToWrite.append(trigger)
+        }
+
+        if commonCfg.isSupportButton() {
+            let trigger = KBCfgTrigger(0, triggerType: KBTriggerType.BtnSingleClick)
+            trigger.setTriggerAction(KBTriggerAction.ReportToApp)
+            triggersToWrite.append(trigger)
+        }
+
+        guard !triggersToWrite.isEmpty else {
+            onTriggerConfigureSkipped?(mac, "no configurable sensors reported by device")
+            onComplete()
+            return
+        }
+
+        writeNextTrigger(beacon, remaining: triggersToWrite, onComplete: onComplete)
+    }
+
+    private func writeNextTrigger(_ beacon: KBeacon, remaining: [KBCfgTrigger], onComplete: @escaping () -> Void) {
+
+        guard let trigger = remaining.first else {
+            onComplete()
+            return
+        }
+
+        let rest = Array(remaining.dropFirst())
+        let mac = beacon.mac ?? "Unknown"
+        let triggerType = trigger.getTriggerType()
+        let triggerPara = trigger.getTriggerPara()
+
+        onTriggerConfigureRequested?(mac, triggerType, triggerPara == KBCfgBase.INVALID_INT ? nil : triggerPara)
+
+        beacon.modifyConfig(obj: trigger) { success, error in
+            Task { @MainActor in
+                self.onTriggerConfigureResult?(mac, triggerType, success, error?.errorDescription)
+                self.writeNextTrigger(beacon, remaining: rest, onComplete: onComplete)
+            }
+        }
+    }
+
+    private func subscribeToSensorData(_ beacon: KBeacon) {
+
+        let mac = beacon.mac ?? "Unknown"
+
+        beacon.subscribeSensorDataNotify(KBTriggerType.TriggerNull, notifyDelegate: self) { success, error in
+            Task { @MainActor in
+                self.onSubscribeResult?(mac, success, error?.errorDescription, self.elapsedMsSinceConnected())
+
+                if success {
+                    self.startNoDataWatchdog(mac: mac)
+                }
+            }
+        }
+    }
+
+    // Makes "nothing arrived" an explicit logged fact instead of indefinite silence. Each
+    // call gets a fresh token so an earlier watchdog (from a previous connection) can't fire
+    // late and report against the wrong attempt.
+    private func startNoDataWatchdog(mac: String) {
+
+        noDataWatchdogToken += 1
+        let myToken = noDataWatchdogToken
+
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: noDataTimeoutSeconds * 1_000_000_000)
+
+            guard myToken == self.noDataWatchdogToken else { return }
+
+            if self.packetCount == 0 {
+                self.onNoDataTimeout?(mac, self.elapsedMsSinceConnected())
+            }
+        }
     }
 }
 
@@ -315,12 +483,22 @@ extension BeaconManager: ConnStateDelegate {
             if state == .Connected {
 
                 self.connectedDeviceLabel = beacon.name ?? beacon.mac ?? "Unknown"
+                self.packetCount = 0
+                self.connectedAt = Date()
+
+                self.logDeviceDiagnostics(beacon)
+
+                self.configureAvailableTriggers(beacon) {
+                    self.subscribeToSensorData(beacon)
+                }
             }
 
             if state == .Disconnected {
 
                 self.connectedDeviceLabel = nil
                 self.connectedBeacon = nil
+                self.connectedAt = nil
+                self.noDataWatchdogToken += 1
 
                 if evt == .ConnAuthFail {
                     self.authFailedBeacon = beacon
@@ -363,6 +541,15 @@ extension BeaconManager: NotifyDataDelegate {
             self.receivedPackets.insert(entry, at: 0)
 
             print("Packet received count: \(self.packetCount)")
+
+            onPacketReceivedLogged?(
+                beacon.mac ?? "Unknown",
+                evt,
+                data.count,
+                self.packetCount,
+                hex,
+                self.elapsedMsSinceConnected()
+            )
         }
     }
 }
