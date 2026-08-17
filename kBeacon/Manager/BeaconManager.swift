@@ -213,6 +213,28 @@ final class BeaconManager: NSObject, ObservableObject {
                         value: String(format: "%.2f%%", sensor.humidity)
                     ))
                 }
+
+                if let acc = sensor.accSensor {
+                    rows.append(KeyValue(
+                        key: "Accelerometer",
+                        value: "x:\(acc.xAis) y:\(acc.yAis) z:\(acc.zAis)"
+                    ))
+                }
+            }
+
+            if let ibeacon = packet as? KBAdvPacketIBeacon {
+
+                if ibeacon.majorID != KBCfgBase.INVALID_UINT {
+                    rows.append(KeyValue(key: "Major", value: "\(ibeacon.majorID)"))
+                }
+
+                if ibeacon.minorID != KBCfgBase.INVALID_UINT {
+                    rows.append(KeyValue(key: "Minor", value: "\(ibeacon.minorID)"))
+                }
+
+                if let uuid = ibeacon.uuid {
+                    rows.append(KeyValue(key: "iBeacon UUID", value: uuid))
+                }
             }
         }
 
