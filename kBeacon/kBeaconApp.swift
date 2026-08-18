@@ -16,6 +16,7 @@ struct kBeaconApp: App {
     @StateObject private var beaconManager = BeaconManager()
     @StateObject private var viewModel: BeaconViewModel
     private let bluetoothPermissionManager = BluetoothPermissionManager()
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
 
@@ -110,6 +111,14 @@ struct kBeaconApp: App {
                 viewModel: viewModel,
                 beaconManager: beaconManager
             )
+        }
+        .onChange(of: scenePhase) { newPhase in
+            // BleLogger's queue is in-memory only - without this, anything queued but not
+            // yet flushed (2s timer / 20-row batch) is lost the moment iOS suspends or kills
+            // the app in the background, with no way to recover it afterward.
+            if newPhase == .background {
+                viewModel.flushLogsNow()
+            }
         }
     }
 }

@@ -17,8 +17,9 @@ struct ContentView: View {
                     state: beaconManager.connectionState,
                     deviceLabel: beaconManager.connectedDeviceLabel,
                     onDisconnect: {
+                        let mac = beaconManager.connectedBeacon?.mac
                         beaconManager.disconnect()
-                        viewModel.disconnect()
+                        viewModel.disconnect(mac: mac)
                     }
                 )
 

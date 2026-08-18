@@ -60,7 +60,7 @@ final class BeaconViewModel: ObservableObject {
 
     // MARK: - Connect
 
-    func connect(_ beacon: KBeacon) {
+    func connect(_ beacon: KBeacon, password: String = BeaconManager.defaultPassword) {
 
         connectCorrelationId = UUID().uuidString
 
@@ -68,25 +68,41 @@ final class BeaconViewModel: ObservableObject {
             correlationId: connectCorrelationId,
             stage: "connect",
             event: "connect_requested",
-            deviceMac: beacon.mac
+            deviceMac: beacon.mac,
+            extra: [
+                "usingDefaultPassword": "\(password == BeaconManager.defaultPassword)",
+                "passwordLength": "\(password.count)"
+            ]
         )
 
         connectedDeviceLabel = beacon.name ?? beacon.mac
         connectionState = .Connected
     }
 
-    func disconnect() {
+    func disconnect(mac: String?) {
 
         bleLogger.log(
             correlationId: connectCorrelationId,
             stage: "connect",
-            event: "disconnect_requested"
+            event: "disconnect_requested",
+            deviceMac: mac
         )
+
+        // Force a flush here rather than waiting for the 2s timer - the app is a likely
+        // candidate to be backgrounded or killed right after the user taps Disconnect, and
+        // the queue is in-memory only, so an unflushed entry at this point is lost for good.
+        bleLogger.flushNow()
 
         connectionState = .Disconnected
         connectedDeviceLabel = nil
         packetCount = 0
         receivedPackets.removeAll()
+    }
+
+    // Called when the app is about to background/terminate, so queued-but-unflushed log
+    // entries aren't silently lost - the queue has no disk backup, unlike the Android side.
+    func flushLogsNow() {
+        bleLogger.flushNow()
     }
 
     // MARK: - Password
@@ -96,7 +112,8 @@ final class BeaconViewModel: ObservableObject {
         bleLogger.log(
             correlationId: connectCorrelationId,
             stage: "connect",
-            event: "password_prompt_cancelled_by_user"
+            event: "password_prompt_cancelled_by_user",
+            deviceMac: authFailedBeacon?.mac
         )
 
         authFailedBeacon = nil
@@ -104,10 +121,13 @@ final class BeaconViewModel: ObservableObject {
 
     func retryConnectWithPassword(_ password: String) {
 
+        let mac = authFailedBeacon?.mac
+
         bleLogger.log(
             correlationId: connectCorrelationId,
             stage: "connect",
-            event: "password_retry_by_user"
+            event: "password_retry_by_user",
+            deviceMac: mac
         )
 
         authFailedBeacon = nil
@@ -139,12 +159,24 @@ final class BeaconViewModel: ObservableObject {
         }
     }
 
+    // Maps BeaconManager.bluetoothState (iOS-side wording) to Android's scanErrorText
+    // phrasing, so the same underlying condition reads the same way in both platforms' logs.
+    // iOS has no numeric equivalent to Android's SCAN_ERROR_* codes (startScanning() only
+    // returns a Bool), so unlike Android this event carries no reasonCode - text only.
+    private func scanFailureReasonText(bluetoothState: String) -> String {
+        switch bluetoothState {
+        case "Powered Off": return "Bluetooth is turned off"
+        case "Unauthorized": return "Missing Bluetooth/location permission"
+        default: return "Unknown scan error"
+        }
+    }
+
     func logScanFailed(reason: String) {
         bleLogger.log(
             correlationId: scanCorrelationId,
             stage: "scan",
             event: "scan_failed",
-            extra: ["reason": reason]
+            extra: ["reason": scanFailureReasonText(bluetoothState: reason)]
         )
     }
 
@@ -187,6 +219,10 @@ final class BeaconViewModel: ObservableObject {
             deviceMac: mac,
             extra: ["reason": "SDK rejected connect() immediately - device may still be finishing a previous disconnect"]
         )
+
+        // Terminal outcome - no onConnStateChange will ever follow for this attempt, so
+        // flush now instead of risking this being the last thing logged before app exit.
+        bleLogger.flushNow()
     }
 
     // Mirrors the Android ViewModel's onConnStateChange: always logs the raw state
@@ -214,6 +250,8 @@ final class BeaconViewModel: ObservableObject {
                 deviceMac: mac
             )
 
+            bleLogger.flushNow()
+
         case .Disconnected:
             let verdictEvent = reason == .ConnManualDisconnting ? "disconnected_by_request" : "connection_failed"
 
@@ -225,6 +263,8 @@ final class BeaconViewModel: ObservableObject {
                 deviceMac: mac,
                 extra: ["reason": reasonText]
             )
+
+            bleLogger.flushNow()
 
         default:
             break
