@@ -762,15 +762,126 @@ final class BeaconManager: NSObject, ObservableObject {
         }
     }
 
-    // Minimal implementation to satisfy compile-time needs.
-    // This can be extended to parse beacon.allAdvPackets if desired.
     private func parseAdvData(_ beacon: KBeacon) -> [KeyValue] {
-        let macKV = KeyValue(key: "mac", value: beacon.mac ?? "Unknown")
-        let nameKV = KeyValue(key: "name", value: beacon.name ?? "Unknown")
-        let uuidKV = KeyValue(key: "uuid", value: beacon.uuidString ?? "N/A")
-        let rssiKV = KeyValue(key: "rssi", value: String(Int(beacon.rssi)))
-        return [macKV, nameKV, uuidKV, rssiKV]
-    }
+
+            var rows: [KeyValue] = []
+
+            guard let packets = beacon.allAdvPackets else { return rows }
+
+            for packet in packets {
+
+                switch packet {
+
+                case let sensor as KBAdvPacketSensor:
+
+                    if sensor.batteryLevel != KBCfgBase.INVALID_UINT16 {
+                        rows.append(KeyValue(key: "Battery", value: "\(sensor.batteryLevel) mV"))
+                    }
+
+                    if sensor.temperature != KBCfgBase.INVALID_FLOAT {
+                        rows.append(KeyValue(key: "Temperature", value: String(format: "%.2f°C", sensor.temperature)))
+                    }
+
+                    if sensor.humidity != KBCfgBase.INVALID_FLOAT {
+                        rows.append(KeyValue(key: "Humidity", value: String(format: "%.2f%%", sensor.humidity)))
+                    }
+
+                    if let acc = sensor.accSensor {
+                        rows.append(KeyValue(key: "Accelerometer", value: "x:\(acc.xAis) y:\(acc.yAis) z:\(acc.zAis)"))
+                    }
+
+                    if sensor.pirIndication != KBCfgBase.INVALID_UINT8 {
+                        rows.append(KeyValue(key: "PIR", value: "\(sensor.pirIndication)"))
+                    }
+
+                    if sensor.luxLevel != KBCfgBase.INVALID_UINT16 {
+                        rows.append(KeyValue(key: "Light (lux)", value: "\(sensor.luxLevel)"))
+                    }
+
+                    // Best-effort match to Android's "Alarm" field - iOS's KBAdvPacketSensor has
+                    // no distinctly-named alarm property; `cutoff` is the closest equivalent
+                    // (same SENSOR_MASK_CUTOFF bit), not a confirmed 1:1 semantic match.
+                    if sensor.cutoff != KBCfgBase.INVALID_UINT8 {
+                        rows.append(KeyValue(key: "Alarm", value: "\(sensor.cutoff)"))
+                    }
+
+                case let tlm as KBAdvPacketEddyTLM:
+
+                    rows.append(KeyValue(key: "TLM Battery", value: "\(tlm.batteryLevel) mV"))
+                    rows.append(KeyValue(key: "TLM Temperature", value: String(format: "%.2f°C", tlm.temperature)))
+                    rows.append(KeyValue(key: "TLM Adv Count", value: "\(tlm.advCount)"))
+
+                case let system as KBAdvPacketSystem:
+
+                    rows.append(KeyValue(key: "Model", value: "\(system.model)"))
+                    rows.append(KeyValue(key: "Firmware", value: system.firmwareVersion))
+                    rows.append(KeyValue(key: "Battery", value: "\(system.batteryPercent)%"))
+
+                case let ibeacon as KBAdvPacketIBeacon:
+
+                    if ibeacon.majorID != KBCfgBase.INVALID_UINT {
+                        rows.append(KeyValue(key: "Major", value: "\(ibeacon.majorID)"))
+                    }
+
+                    if ibeacon.minorID != KBCfgBase.INVALID_UINT {
+                        rows.append(KeyValue(key: "Minor", value: "\(ibeacon.minorID)"))
+                    }
+
+                    if let uuid = ibeacon.uuid {
+                        rows.append(KeyValue(key: "iBeacon UUID", value: uuid))
+                    }
+
+                case let uid as KBAdvPacketEddyUID:
+
+                    if let nid = uid.nid {
+                        rows.append(KeyValue(key: "Eddystone NID", value: nid))
+                    }
+
+                    if let sid = uid.sid {
+                        rows.append(KeyValue(key: "Eddystone SID", value: sid))
+                    }
+
+                    if uid.refTxPower != KBCfgBase.INVALID_INT8 {
+                        rows.append(KeyValue(key: "Eddystone Ref TX Power", value: "\(uid.refTxPower)"))
+                    }
+
+                case let url as KBAdvPacketEddyURL:
+
+                    rows.append(KeyValue(key: "Eddystone URL", value: url.url))
+
+                    // KBAdvPacketEddyURL.refTxPower defaults to -24, not KBCfgBase.INVALID_INT8,
+                    // so there's no reliable "unset" sentinel to guard against here - it's always
+                    // populated from real data once parseAdvPacket succeeds (which is required for
+                    // this packet to appear in allAdvPackets at all), so log unconditionally.
+                    rows.append(KeyValue(key: "Eddystone URL Ref TX Power", value: "\(url.refTxPower)"))
+
+                case let ebeacon as KBAdvPacketEBeacon:
+
+                    if let uuid = ebeacon.uuid {
+                        rows.append(KeyValue(key: "Encrypted Beacon UUID", value: uuid))
+                    }
+
+                    rows.append(KeyValue(key: "Encrypted Beacon UTC", value: "\(ebeacon.utcSecCount)"))
+
+                    // Android's Kotlin model names this field "refTxPower"; iOS's KBAdvPacketEBeacon
+                    // names the same concept "measurePower" - no distinct "unset" sentinel exists
+                    // for it either, so logged unconditionally like EddyURL's refTxPower above.
+                    rows.append(KeyValue(key: "Encrypted Beacon Ref TX Power", value: "\(ebeacon.measurePower)"))
+
+                default:
+
+                    // Matches Android's `else -> "Unrecognized adv packet type"` fallback - without
+                    // this, any packet type not explicitly handled above produced an empty row,
+                    // which meant onAdvDataChanged never fired at all for that device (it's gated
+                    // on `!advData.isEmpty`) - silently dropping it from Supabase logging entirely.
+                    rows.append(KeyValue(key: "Unrecognized adv packet type", value: "\(packet.getAdvType())"))
+                }
+            }
+
+            return rows
+        }
+
+     
 }
 
 // MARK: - Scan delegate
