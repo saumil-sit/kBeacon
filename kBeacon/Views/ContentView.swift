@@ -62,24 +62,24 @@ struct ContentView: View {
                 }
 
                 // Live data status
-                if beaconManager.connectionState == .Connected {
-
-                    LiveDataVerdictView(packetCount: beaconManager.packetCount)
-
-                    if !beaconManager.receivedPackets.isEmpty {
-
-                        Text("Received packets")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        List(beaconManager.receivedPackets) { packet in
-                            ReceivedPacketRowView(entry: packet)
-                        }
-                        .frame(height: 220)
-                    }
-                }
-
-                Divider()
+//                if beaconManager.connectionState == .Connected {
+//
+//                    LiveDataVerdictView(packetCount: beaconManager.packetCount)
+//
+//                    if !beaconManager.receivedPackets.isEmpty {
+//
+//                        Text("Received packets")
+//                            .font(.headline)
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//
+//                        List(beaconManager.receivedPackets) { packet in
+//                            ReceivedPacketRowView(entry: packet)
+//                        }
+//                        .frame(height: 220)
+//                    }
+//                }
+//
+//                Divider()
 
                 // Device list
                 if beaconManager.devices.isEmpty {
@@ -182,9 +182,9 @@ struct ContentView: View {
     let logger = BleLogger(client: client)
 
     let viewModel = BeaconViewModel(bleLogger: logger)
-    let beaconManager = BeaconManager()
+    let beaconManager = BeaconManager(bleLogger: logger)
 
-    return ContentView(
+    ContentView(
         viewModel: viewModel,
         beaconManager: beaconManager
     )
